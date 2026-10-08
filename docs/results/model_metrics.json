@@ -1,0 +1,32 @@
+{
+  "evaluation_notice": "Metrics use compact synthetic gold sets and are not production claims.",
+  "sentiment": {
+    "backend": "financial_lexicon_v1",
+    "samples": 15,
+    "macro_f1": 1.0,
+    "accuracy": 1.0,
+    "support": {
+      "positive": 5,
+      "neutral": 5,
+      "negative": 5
+    }
+  },
+  "event": {
+    "backend": "taxonomy_rules_v1",
+    "samples": 20,
+    "macro_f1": 0.9467,
+    "accuracy": 0.95,
+    "support": {
+      "geopolitical": 2,
+      "macroeconomic": 2,
+      "credit_event": 2,
+      "merger_acquisition": 2,
+      "product_launch": 2,
+      "regulatory_legal": 2,
+      "operational_cyber": 2,
+      "earnings_guidance": 2,
+      "climate_natural_hazard": 2,
+      "other": 2
+    }
+  }
+}
