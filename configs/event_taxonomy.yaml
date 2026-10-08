@@ -1,0 +1,43 @@
+version: "1.0"
+labels:
+  geopolitical:
+    display_name: Geopolitical
+    severity_prior: 0.85
+    keywords: [sanction, sanctions, war, conflict, invasion, blockade, export ban, trade restriction, border]
+  macroeconomic:
+    display_name: Macroeconomic
+    severity_prior: 0.72
+    keywords: [inflation, recession, gdp, unemployment, rate hike, rate cut, central bank, monetary policy]
+  credit_event:
+    display_name: Credit Event
+    severity_prior: 0.92
+    keywords: [default, downgrade, bankruptcy, insolvency, restructuring, missed payment, covenant, liquidity crisis]
+  merger_acquisition:
+    display_name: Merger / Acquisition
+    severity_prior: 0.58
+    keywords: [acquisition, acquire, merger, takeover, buyout, divestiture, tender offer]
+  product_launch:
+    display_name: Product Launch
+    severity_prior: 0.35
+    keywords: [launch, product release, unveiled, approval, rollout, recall, product delay]
+  regulatory_legal:
+    display_name: Regulatory / Legal
+    severity_prior: 0.68
+    keywords: [regulator, regulation, investigation, lawsuit, fine, penalty, antitrust, enforcement]
+  operational_cyber:
+    display_name: Operational / Cyber
+    severity_prior: 0.78
+    keywords: [cyberattack, cyber attack, ransomware, breach, outage, shutdown, disruption, fraud]
+  earnings_guidance:
+    display_name: Earnings / Guidance
+    severity_prior: 0.52
+    keywords: [earnings, revenue, profit warning, guidance, forecast, quarterly results, margin]
+  climate_natural_hazard:
+    display_name: Climate / Natural Hazard
+    severity_prior: 0.66
+    keywords: [flood, wildfire, hurricane, cyclone, earthquake, drought, natural disaster]
+  other:
+    display_name: Other
+    severity_prior: 0.30
+    keywords: []
+

@@ -1,0 +1,22 @@
+text,label,impact_score
+"Government imposes new sanctions and an export ban after border conflict",geopolitical,8.8
+"Trade restrictions escalate as a regional war disrupts supply routes",geopolitical,9.1
+"Central bank announces a rate hike as inflation accelerates",macroeconomic,7.8
+"GDP contracts and unemployment rises amid recession fears",macroeconomic,8.0
+"Nova Bank misses payment and enters restructuring talks",credit_event,9.2
+"Issuer default follows a severe liquidity crisis and downgrade",credit_event,9.5
+"Atlas Motors announces acquisition of Cedar Logistics",merger_acquisition,5.6
+"Board approves a proposed merger and takeover offer",merger_acquisition,6.0
+"Aeon Technologies launches a new approved cloud platform",product_launch,4.5
+"Orion Pharma delays a product launch after a recall",product_launch,6.2
+"Regulator opens an antitrust investigation and threatens a fine",regulatory_legal,7.4
+"Court imposes a large penalty after an enforcement action",regulatory_legal,7.8
+"Helios Energy suffers a ransomware breach and plant shutdown",operational_cyber,8.6
+"Network outage causes a major operational disruption",operational_cyber,7.5
+"Company raises guidance after record quarterly earnings",earnings_guidance,5.1
+"Profit warning follows weak revenue and lower forecast",earnings_guidance,6.8
+"A severe flood closes a regional manufacturing facility",climate_natural_hazard,7.6
+"Wildfire and drought disrupt mining operations",climate_natural_hazard,7.9
+"Company schedules a community meeting next month",other,2.0
+"Executive speaks at a routine industry conference",other,2.2
+

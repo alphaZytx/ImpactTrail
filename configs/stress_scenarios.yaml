@@ -1,0 +1,49 @@
+version: "1.0"
+trigger_threshold: 7.0
+scenarios:
+  geopolitical:
+    name: Geopolitical escalation
+    description: Illustrative risk-off shock with regional and sector exposure matching.
+    shocks:
+      equity_pct: -0.12
+      rates_bps: 75
+      credit_spread_bps: 180
+      pd_multiplier: 1.45
+      fx_pct: -0.07
+  macroeconomic:
+    name: Inflation and rate shock
+    description: Illustrative parallel rate and credit deterioration scenario.
+    shocks:
+      equity_pct: -0.09
+      rates_bps: 200
+      credit_spread_bps: 120
+      pd_multiplier: 1.25
+      fx_pct: -0.03
+  credit_event:
+    name: Credit deterioration
+    description: Illustrative issuer/sector credit event with spillover.
+    shocks:
+      equity_pct: -0.16
+      rates_bps: 25
+      credit_spread_bps: 300
+      pd_multiplier: 2.00
+      fx_pct: -0.02
+  regulatory_legal:
+    name: Regulatory enforcement
+    description: Illustrative sector-specific legal and funding shock.
+    shocks:
+      equity_pct: -0.10
+      rates_bps: 25
+      credit_spread_bps: 110
+      pd_multiplier: 1.20
+      fx_pct: 0.00
+  operational_cyber:
+    name: Operational disruption
+    description: Illustrative short-horizon operational/cyber shock.
+    shocks:
+      equity_pct: -0.14
+      rates_bps: 0
+      credit_spread_bps: 140
+      pd_multiplier: 1.30
+      fx_pct: 0.00
+

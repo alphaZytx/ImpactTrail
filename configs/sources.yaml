@@ -1,0 +1,19 @@
+version: "1.0"
+sources:
+  gdelt:
+    enabled: false
+    source_type: news
+    base_url: https://api.gdeltproject.org/api/v2/doc/doc
+    max_records: 25
+    timeout_seconds: 10
+  bluesky:
+    enabled: false
+    source_type: social
+    base_url: https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts
+    limit: 25
+    timeout_seconds: 10
+  replay:
+    enabled: true
+    source_type: replay
+    fixture: data/demo/mixed_source_events.jsonl
+

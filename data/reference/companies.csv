@@ -1,0 +1,12 @@
+entity_id,name,ticker,aliases,sector,country
+nova-bank,Nova Bank,NOVA,Nova|Nova Banking,Financials,United States
+aeon-tech,Aeon Technologies,AEON,Aeon Tech|Aeon,Technology,United States
+helios-energy,Helios Energy,HLIO,Helios|Helios Power,Energy,United Kingdom
+meridian-retail,Meridian Retail,MRDN,Meridian Stores|Meridian,Consumer,India
+atlas-motors,Atlas Motors,ATMO,Atlas Auto|Atlas,Industrials,Germany
+orion-pharma,Orion Pharma,ORPH,Orion Pharmaceuticals|Orion,Healthcare,Switzerland
+vertex-telecom,Vertex Telecom,VRTX,Vertex Communications|Vertex,Telecommunications,Singapore
+lumen-aerospace,Lumen Aerospace,LUMN,Lumen Aero|Lumen,Industrials,France
+cedar-logistics,Cedar Logistics,CDRL,Cedar Freight|Cedar,Logistics,Canada
+terra-mining,Terra Mining,TRRA,Terra Minerals|Terra,Materials,Australia
+
