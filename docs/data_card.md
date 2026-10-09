@@ -13,7 +13,7 @@ redistributable, deterministic, and free of client/customer confidentiality conc
 | Company registry | 10 | Entity/ticker/alias resolution | Fictional |
 | Wholesale portfolio | 72 | Stress testing | Synthetic |
 | Sentiment gold set | 15 | Contract/baseline evaluation | Synthetic |
-| Event gold set | 20 | Classification evaluation | Synthetic |
+| Event/impact gold set | 20 | Classification and severity-rubric evaluation | Synthetic |
 
 The SHA-256 manifest is `data/manifests/data_manifest.csv`. Portfolio generation is fixed at seed
 `20261008`.
@@ -36,6 +36,7 @@ data is optional, local-only by default, and excluded from Git.
 - English-only evaluation.
 - Small, intentionally balanced evaluation sets.
 - Synthetic phrasing is simpler than live reporting or social language.
+- Impact targets are human-specified severity-rubric scores, not observed market outcomes.
 - Ratings and sensitivities exist to test calculations, not to describe real credit quality.
 - Model performance on these files must not be generalized to real markets.
 
@@ -43,4 +44,3 @@ data is optional, local-only by default, and excluded from Git.
 
 `python scripts/validate_data.py` validates source diversity, schemas, record counts, asset-class
 coverage, and manifest hashes. `make seed` regenerates and validates the portfolio.
-

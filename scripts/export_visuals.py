@@ -71,7 +71,7 @@ def architecture() -> None:
     image = Image.new("RGB", (2400, 1350), PAPER)
     draw = ImageDraw.Draw(image)
     draw.rounded_rectangle((70, 60, 2330, 240), radius=34, fill=INK)
-    draw.text((125, 105), "RISK PULSE", font=font(30, bold=True), fill=GOLD)
+    draw.text((125, 105), "RISKPULSE", font=font(30, bold=True), fill=GOLD)
     draw.text(
         (125, 150),
         "Auditable financial risk intelligence - source to portfolio impact",
@@ -118,7 +118,7 @@ def architecture() -> None:
 
     for key in ("signals", "api"):
         draw.rounded_rectangle(boxes[key], radius=28, fill=WHITE, outline="#D8E1EC", width=3)
-    center_text(draw, boxes["signals"], "SIGNAL STORE", "SQLite / JSONL")
+    center_text(draw, boxes["signals"], "SIGNAL STORE", "SQLite / API")
     center_text(draw, boxes["api"], "FASTAPI", "OpenAPI / filters")
 
     draw.rounded_rectangle(boxes["stress"], radius=28, fill="#FFF5DC", outline=GOLD, width=4)
@@ -176,94 +176,10 @@ def architecture() -> None:
     image.save(DOCS / "architecture.png", quality=95)
 
 
-def dashboard_preview() -> None:
-    image = Image.new("RGB", (2400, 1350), PAPER)
-    draw = ImageDraw.Draw(image)
-    draw.rectangle((0, 0, 400, 1350), fill=INK)
-    draw.text((65, 70), "RISK PULSE", font=font(38, bold=True), fill=GOLD)
-    draw.text((65, 120), "Financial risk intelligence", font=font(23), fill="#B9C9D8")
-    draw.rounded_rectangle((55, 215, 345, 285), radius=20, fill=TEAL)
-    draw.text((90, 235), "RUN DEMO REPLAY", font=font(24, bold=True), fill=WHITE)
-    for index, item in enumerate(
-        ("Overview", "Signal explorer", "Stress lab", "Portfolio", "Model quality")
-    ):
-        y = 380 + index * 88
-        fill = WHITE if index == 0 else "#A9BED3"
-        draw.text((75, y), item, font=font(27, bold=index == 0), fill=fill)
-
-    draw.rounded_rectangle((455, 55, 2330, 260), radius=34, fill=INK)
-    draw.text((520, 95), "FROM NARRATIVE NOISE", font=font(25, bold=True), fill=GOLD)
-    draw.text((520, 140), "TO PORTFOLIO IMPACT.", font=font(54, bold=True), fill=WHITE)
-    draw.text(
-        (520, 205),
-        "entity-aware signals  |  auditable AI  |  transparent scenarios",
-        font=font(25),
-        fill="#B9C9D8",
-    )
-
-    kpis = [
-        ("DOCUMENTS", "8", TEAL),
-        ("SIGNALS", "9", BLUE),
-        ("ACTIONABLE", "8", GOLD),
-        ("STRESS RUNS", "4", RED),
-    ]
-    for index, (label, value, color) in enumerate(kpis):
-        x = 455 + index * 470
-        draw.rounded_rectangle(
-            (x, 310, x + 420, 500), radius=28, fill=WHITE, outline="#D8E1EC", width=3
-        )
-        draw.rectangle((x, 310, x + 12, 500), fill=color)
-        draw.text((x + 45, 345), label, font=font(22, bold=True), fill=MUTED)
-        draw.text((x + 45, 395), value, font=font(62, bold=True), fill=INK)
-
-    draw.rounded_rectangle(
-        (455, 555, 1390, 1260), radius=30, fill=WHITE, outline="#D8E1EC", width=3
-    )
-    draw.text((510, 605), "LATEST RISK SIGNALS", font=font(27, bold=True), fill=INK)
-    rows = [
-        ("Nova Bank", "CREDIT EVENT", "8.9", RED),
-        ("Market-wide", "MACROECONOMIC", "8.1", GOLD),
-        ("Helios Energy", "OPERATIONAL / CYBER", "8.6", RED),
-        ("Vertex Telecom", "REGULATORY / LEGAL", "7.8", GOLD),
-    ]
-    for index, (entity, event, impact, color) in enumerate(rows):
-        y = 680 + index * 130
-        draw.rounded_rectangle((505, y, 1340, y + 98), radius=20, fill="#F8FAFC")
-        draw.ellipse((535, y + 32, 565, y + 62), fill=color)
-        draw.text((590, y + 18), entity, font=font(28, bold=True), fill=INK)
-        draw.text((590, y + 56), event, font=font(20), fill=MUTED)
-        draw.text((1220, y + 28), impact, font=font(32, bold=True), fill=color)
-
-    draw.rounded_rectangle(
-        (1440, 555, 2330, 1260), radius=30, fill=WHITE, outline="#D8E1EC", width=3
-    )
-    draw.text((1495, 605), "PORTFOLIO STRESS", font=font(27, bold=True), fill=INK)
-    draw.text((1495, 665), "Credit deterioration", font=font(34, bold=True), fill=INK)
-    draw.text((1495, 715), "impact trigger 8.9 / 10", font=font(23), fill=MUTED)
-    draw.text((1495, 800), "PRE-STRESS", font=font(20, bold=True), fill=MUTED)
-    draw.text((1495, 840), "$411.8M", font=font(48, bold=True), fill=INK)
-    draw.text((1900, 800), "SCENARIO P&L", font=font(20, bold=True), fill=MUTED)
-    draw.text((1900, 840), "-$7.4M", font=font(48, bold=True), fill=RED)
-    bars = [("Loans", 0.38), ("Bonds", 0.92), ("Derivatives", 0.55)]
-    for index, (label, portion) in enumerate(bars):
-        y = 980 + index * 76
-        draw.text((1495, y), label, font=font(22), fill=MUTED)
-        draw.rounded_rectangle((1690, y + 2, 2220, y + 32), radius=15, fill="#E4EAF1")
-        draw.rounded_rectangle(
-            (1690, y + 2, 1690 + int(530 * portion), y + 32), radius=15, fill=RED
-        )
-    draw.text(
-        (1495, 1200), "Illustrative - not regulatory stress testing", font=font(20), fill=MUTED
-    )
-
-    image.save(DOCS / "dashboard_preview.png", quality=95)
-
-
 def main() -> None:
     DOCS.mkdir(parents=True, exist_ok=True)
     architecture()
-    dashboard_preview()
-    print("Exported docs/architecture.png and docs/dashboard_preview.png")
+    print("Exported docs/architecture.png; dashboard preview is captured from the running app")
 
 
 if __name__ == "__main__":

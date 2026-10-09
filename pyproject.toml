@@ -9,7 +9,7 @@ description = "Auditable financial risk intelligence from news and social text"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 license = "MIT"
-authors = [{name = "Hackathon Candidate"}]
+authors = [{name = "Alok Chandra"}]
 dependencies = [
   "fastapi>=0.115,<1",
   "uvicorn>=0.30,<1",

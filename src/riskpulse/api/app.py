@@ -27,6 +27,7 @@ class AnalyzeRequest(BaseModel):
 
 class ReplayRequest(BaseModel):
     fixture: str = "data/demo/mixed_source_events.jsonl"
+    reset: bool = False
 
 
 class StressRequest(BaseModel):
@@ -101,8 +102,10 @@ def create_app() -> FastAPI:
             raise HTTPException(
                 status_code=400, detail="Fixture must exist under the data directory"
             )
+        if request.reset:
+            get_repository().clear_runtime()
         summary = await get_pipeline().process_adapter(ReplayAdapter(fixture))
-        return {"status": "complete", **summary.as_dict()}
+        return {"status": "complete", "reset": request.reset, **summary.as_dict()}
 
     @app.get("/api/v1/signals", response_model=SignalList, tags=["signals"])
     def signals(
@@ -199,6 +202,13 @@ def create_app() -> FastAPI:
             "active_event_backend": pipeline.event_classifier.backend,
             "model_version": "risk-engine-1.0.0",
             "mode": settings.env,
+            "decision_policy": {
+                "event_confidence_min": settings.event_confidence_threshold,
+                "impact_confidence_min": settings.impact_confidence_threshold,
+                "stress_impact_strictly_above": settings.stress_trigger_threshold,
+                "supported_scenarios": sorted(pipeline.stress_service.scenarios),
+                "scenario_direction_exclusions": {"macroeconomic": ["rate cut"]},
+            },
         }
 
     return app

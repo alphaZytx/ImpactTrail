@@ -7,7 +7,7 @@ from uuid import NAMESPACE_URL, uuid5
 
 from riskpulse.config import load_yaml
 from riskpulse.domain.portfolio import AssetType, PortfolioPosition
-from riskpulse.domain.signals import RiskSignal
+from riskpulse.domain.signals import EventLabel, EventResult, RiskSignal
 from riskpulse.domain.stress import ShockSet, StressPositionResult, StressRun
 from riskpulse.stress_testing.portfolio import load_portfolio, portfolio_version
 
@@ -29,6 +29,17 @@ class StressTestingService:
             signal.actionable
             and signal.impact.score > self.trigger_threshold
             and signal.event.label.value in self.scenarios
+            and self.direction_is_supported(signal.event)
+        )
+
+    @staticmethod
+    def direction_is_supported(event: EventResult) -> bool:
+        """Prevent a rate-cut narrative from selecting the adverse rate-rise scenario."""
+        matched_terms = {term.casefold() for term in event.matched_terms}
+        return not (
+            event.label == EventLabel.MACROECONOMIC
+            and "rate cut" in matched_terms
+            and "rate hike" not in matched_terms
         )
 
     def run(self, signal: RiskSignal) -> StressRun | None:

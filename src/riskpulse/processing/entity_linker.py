@@ -94,3 +94,15 @@ class EntityLinker:
             match_confidence=0.85,
             match_method="market_event",
         )
+
+    @staticmethod
+    def unresolved() -> EntityMatch:
+        return EntityMatch(
+            entity_id="unresolved",
+            name="Unresolved entity",
+            ticker=None,
+            sector=None,
+            country=None,
+            match_confidence=0.0,
+            match_method="unresolved",
+        )

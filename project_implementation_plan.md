@@ -2,7 +2,7 @@
 
 > **Working title:** RiskPulse — Real-Time Financial Risk Intelligence  
 > **Project type:** S&P Global & Crisil Campus Hackathon 2026 submission  
-> **Status:** Greenfield implementation blueprint  
+> **Status:** Archived planning blueprint; see `docs/as_built.md` for shipped behavior
 > **Source of truth:** `problem_statement.md` and `project_guidlines.md`  
 > **Plan principle:** Build one excellent, measurable, reproducible end-to-end product before adding breadth.
 
@@ -40,7 +40,9 @@ Module B is the primary choice because it consumes both event classification and
 | Packaging | Local one-command run plus Docker Compose | Reviewer-friendly and reproducible |
 | Deployment | Local demo is mandatory; hosted demo is optional | Submission rules require a functional demonstration, not a production cloud platform |
 
-The current repository has no code, dependencies, data, tests, Git history, README, license, diagrams, or presentation assets. All phases below therefore assume a greenfield build.
+This plan was written before implementation and is retained to show the design process. It includes
+stretch goals and proposed acceptance checks that were intentionally not all shipped. The precise
+as-built scope and evidence are documented in `docs/as_built.md`.
 
 ---
 

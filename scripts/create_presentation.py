@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import asyncio
+import json
 import os
 import shutil
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -11,7 +14,10 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen import canvas
 
-from riskpulse.config import get_settings
+from riskpulse.config import Settings
+from riskpulse.ingestion.replay import ReplayAdapter
+from riskpulse.nlp.sentiment import LexiconSentimentAnalyzer
+from riskpulse.services.pipeline import RiskPipeline
 from riskpulse.storage.repositories import Repository
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -135,20 +141,33 @@ def metric_card(
 
 
 def load_results() -> tuple[dict[str, Any], dict[str, Any] | None]:
-    settings = get_settings()
-    repository = Repository(settings.database_url)
-    repository.init_schema()
-    metrics = repository.metrics()
-    credit_signal = next(
-        (
-            signal
-            for signal in repository.list_signals(limit=100)[0]
-            if signal.event.label.value == "credit_event"
-        ),
-        None,
-    )
-    stress = repository.get_stress_run_for_signal(credit_signal) if credit_signal else None
-    return metrics, stress.model_dump(mode="json") if stress else None
+    """Build deck evidence from an isolated deterministic replay, never mutable demo state."""
+    with tempfile.TemporaryDirectory(prefix="riskpulse-deck-") as directory:
+        settings = Settings(
+            env="test",
+            database_url=f"sqlite:///{Path(directory) / 'presentation.db'}",
+            model_backend="lexicon",
+        )
+        repository = Repository(settings.database_url)
+        pipeline = RiskPipeline(settings, repository, LexiconSentimentAnalyzer())
+        fixture = settings.project_root / "data/demo/mixed_source_events.jsonl"
+        summary = asyncio.run(pipeline.process_adapter(ReplayAdapter(fixture)))
+        metrics = {**repository.metrics(), "replay_summary": summary.as_dict()}
+        credit_signal = next(
+            (
+                signal
+                for signal in repository.list_signals(limit=100)[0]
+                if signal.event.label.value == "credit_event"
+            ),
+            None,
+        )
+        stress = repository.get_stress_run_for_signal(credit_signal) if credit_signal else None
+        return metrics, stress.model_dump(mode="json") if stress else None
+
+
+def load_evaluation() -> dict[str, Any]:
+    metrics_path = DOCS / "results/model_metrics.json"
+    return json.loads(metrics_path.read_text(encoding="utf-8"))
 
 
 def slide_1(pdf: canvas.Canvas, metrics: dict[str, Any]) -> None:
@@ -165,7 +184,7 @@ def slide_1(pdf: canvas.Canvas, metrics: dict[str, Any]) -> None:
     pdf.drawString(62, 465, "S&P GLOBAL & CRISIL CAMPUS HACKATHON 2026")
     pdf.setFont("Helvetica-Bold", 53)
     set_fill(pdf, WHITE)
-    pdf.drawString(62, 365, "RISK PULSE")
+    pdf.drawString(62, 365, "RISKPULSE")
     pdf.setFont("Helvetica-Bold", 29)
     pdf.drawString(62, 318, "From narrative noise to portfolio impact")
     draw_wrapped(
@@ -230,7 +249,7 @@ def slide_2(pdf: canvas.Canvas) -> None:
     rounded_card(pdf, 478, 90, 434, 330, fill=HexColor("#EAF8F7"), stroke=TEAL)
     pdf.setFont("Helvetica-Bold", 18)
     set_fill(pdf, TEAL)
-    pdf.drawString(505, 380, "THE RISK PULSE APPROACH")
+    pdf.drawString(505, 380, "THE RISKPULSE APPROACH")
     steps = [
         ("1", "Normalize", "News + social + replay"),
         ("2", "Understand", "Entity + sentiment + event"),
@@ -322,14 +341,14 @@ def slide_4(pdf: canvas.Canvas) -> None:
     rounded_card(pdf, 598, 55, 314, 185, fill=HexColor("#EAF8F7"), stroke=TEAL)
     pdf.setFont("Helvetica-Bold", 16)
     set_fill(pdf, INK)
-    pdf.drawString(622, 204, "ACTION GATE")
+    pdf.drawString(622, 204, "AUTOMATIC STRESS GATE")
     draw_bullets(
         pdf,
         [
             "Event confidence >= 0.65",
             "Impact confidence >= 0.60",
             "Impact strictly > 7.0",
-            "Supported scenario + idempotency",
+            "Compatible scenario + idempotency",
         ],
         622,
         170,
@@ -370,13 +389,22 @@ def slide_5(pdf: canvas.Canvas, stress: dict[str, Any] | None) -> None:
         pdf, 270, 285, 200, "Post-stress value", f"${stress['post_stress_value'] / 1e6:.1f}M", TEAL
     )
     metric_card(pdf, 492, 285, 200, "Scenario P&L", f"-${abs(stress['pnl']) / 1e6:.1f}M", RED)
-    metric_card(pdf, 714, 285, 198, "Impact trigger", f"{stress['trigger_impact']:.1f}/10", GOLD)
+    metric_card(pdf, 714, 285, 198, "Portfolio loss", f"{stress['pnl_percent']:.2%}", GOLD)
 
     rounded_card(pdf, 48, 55, 415, 195)
     pdf.setFont("Helvetica-Bold", 16)
     set_fill(pdf, INK)
     pdf.drawString(72, 218, stress["scenario_name"].upper())
     draw_wrapped(pdf, stress["scenario_description"], 72, 192, 360, size=13, color=MUTED)
+    pdf.setFont("Helvetica-Bold", 10)
+    set_fill(pdf, RED)
+    pdf.drawString(
+        72,
+        160,
+        f"TRIGGER {stress['trigger_impact']:.1f}/10  |  "
+        f"{len(stress['position_results'])} POSITIONS  |  "
+        f"${abs(stress['reconciliation_error']):,.2f} RECONCILIATION",
+    )
     shocks = stress["base_shocks"]
     shock_lines = [
         f"Equity: {shocks['equity_pct']:.0%}",
@@ -387,7 +415,7 @@ def slide_5(pdf: canvas.Canvas, stress: dict[str, Any] | None) -> None:
     pdf.setFont("Helvetica-Bold", 12)
     set_fill(pdf, INK)
     for index, line in enumerate(shock_lines):
-        pdf.drawString(72 + (index % 2) * 180, 126 - (index // 2) * 35, line)
+        pdf.drawString(72 + (index % 2) * 180, 118 - (index // 2) * 32, line)
 
     rounded_card(pdf, 490, 55, 422, 195, fill=INK, stroke=INK)
     pdf.setFont("Helvetica-Bold", 16)
@@ -406,39 +434,62 @@ def slide_5(pdf: canvas.Canvas, stress: dict[str, Any] | None) -> None:
         pdf.setFont("Helvetica", 12)
         set_fill(pdf, HexColor("#C8D6E5"))
         pdf.drawString(630, y, method)
+    pdf.setFont("Helvetica-Bold", 10)
+    set_fill(pdf, HexColor("#A9BED3"))
+    pdf.drawString(514, 64, "ALL POSITION RESULTS RECONCILE TO PORTFOLIO TOTALS")
     footer(pdf, 5)
     pdf.showPage()
 
 
-def slide_6(pdf: canvas.Canvas, metrics: dict[str, Any]) -> None:
+def slide_6(pdf: canvas.Canvas, metrics: dict[str, Any], evaluation: dict[str, Any]) -> None:
     pdf.setFillColor(PAPER)
     pdf.rect(0, 0, WIDTH, HEIGHT, stroke=0, fill=1)
     title(
         pdf,
         "05 - Measured results",
-        "Reproducible evidence, with limitations attached",
-        "The submitted sets verify contracts and behavior; they do not estimate production "
-        "accuracy.",
+        "Reproducible evidence, with the limitations attached",
+        "Replay proves the workflow; compact synthetic sets verify contracts, not production "
+        "generalization.",
     )
     preview = ImageReader(str(DOCS / "dashboard_preview.png"))
     pdf.drawImage(preview, 465, 74, width=447, height=251, preserveAspectRatio=True, mask="auto")
-    metric_card(pdf, 48, 336, 197, "Unique documents", str(metrics.get("documents", 0)), TEAL)
-    metric_card(pdf, 265, 336, 177, "Replay failures", "0", BLUE)
+    replay = metrics["replay_summary"]
+    top_metrics = [
+        ("Inputs / unique", f"{replay['fetched']} / {metrics['documents']}", TEAL),
+        ("Exact duplicates", str(replay["duplicates"]), BLUE),
+        ("Stress runs", str(metrics["stress_runs"]), GOLD),
+        ("Replay failures", str(replay["failed"]), RED),
+    ]
+    for index, (label_text, value, color) in enumerate(top_metrics):
+        metric_card(pdf, 48 + index * 219, 336, 207, label_text, value, color)
     rounded_card(pdf, 48, 74, 394, 235)
     pdf.setFont("Helvetica-Bold", 16)
     set_fill(pdf, INK)
-    pdf.drawString(72, 270, "SYNTHETIC-SET MODEL EVIDENCE")
+    pdf.drawString(72, 270, "SYNTHETIC-SET CONTRACT EVIDENCE")
     rows = [
-        ("Finance sentiment", "15", "100.00%"),
-        ("Event taxonomy", "20", "94.67%"),
+        (
+            "Finance sentiment",
+            str(evaluation["sentiment"]["samples"]),
+            f"{evaluation['sentiment']['macro_f1']:.0%} F1",
+        ),
+        (
+            "Event taxonomy",
+            str(evaluation["event"]["samples"]),
+            f"{evaluation['event']['macro_f1']:.0%} F1",
+        ),
+        (
+            "Impact severity",
+            str(evaluation["impact"]["samples"]),
+            f"{evaluation['impact']['mae']:.2f} MAE",
+        ),
     ]
     pdf.setFont("Helvetica-Bold", 10)
     set_fill(pdf, MUTED)
     pdf.drawString(72, 230, "BASELINE")
     pdf.drawString(260, 230, "N")
-    pdf.drawString(315, 230, "MACRO-F1")
+    pdf.drawString(315, 230, "RESULT")
     for index, (name, count, score) in enumerate(rows):
-        y = 196 - index * 45
+        y = 196 - index * 39
         pdf.setStrokeColor(LINE)
         pdf.line(72, y - 10, 415, y - 10)
         pdf.setFont("Helvetica", 12)
@@ -449,7 +500,7 @@ def slide_6(pdf: canvas.Canvas, metrics: dict[str, Any]) -> None:
         pdf.drawString(315, y, score)
     pdf.setFont("Helvetica", 10)
     set_fill(pdf, RED)
-    pdf.drawString(72, 91, "Compact synthetic data - not a production accuracy claim")
+    pdf.drawString(72, 87, "Synthetic rubric data - not a production accuracy claim")
     footer(pdf, 6)
     pdf.showPage()
 
@@ -459,42 +510,40 @@ def slide_7(pdf: canvas.Canvas) -> None:
     pdf.rect(0, 0, WIDTH, HEIGHT, stroke=0, fill=1)
     pdf.setFont("Helvetica-Bold", 14)
     set_fill(pdf, GOLD)
-    pdf.drawString(48, HEIGHT - 50, "06 - LIMITATIONS AND NEXT STEPS")
+    pdf.drawString(48, HEIGHT - 50, "06 - DOMAIN IMPACT AND RESPONSIBLE SCALE")
     pdf.setFont("Helvetica-Bold", 32)
     set_fill(pdf, WHITE)
-    pdf.drawString(48, HEIGHT - 92, "Useful because it is honest about uncertainty")
+    pdf.drawString(48, HEIGHT - 92, "Make every automated risk action challengeable")
     rounded_card(pdf, 48, 118, 400, 310, fill=HexColor("#173354"), stroke=HexColor("#274B70"))
     pdf.setFont("Helvetica-Bold", 17)
-    set_fill(pdf, RED)
-    pdf.drawString(74, 388, "LIMITATIONS")
-    limitations = [
-        "English-only, compact synthetic evaluation.",
-        "Rules and lexicons miss novel phrasing and sarcasm.",
-        "Impact contains transparent modeling judgment.",
-        "Valuation is illustrative, not regulatory capital analysis.",
+    set_fill(pdf, TEAL)
+    pdf.drawString(74, 388, "ANALYST VALUE")
+    analyst_value = [
+        "Prioritize narratives by severity and exposed portfolio drivers.",
+        "Replace manual handoffs with one source-to-loss decision trace.",
+        "Apply consistent confidence and scenario policy gates.",
+        "Challenge every score through evidence, factors, and assumptions.",
     ]
-    for index, item in enumerate(limitations):
+    for index, item in enumerate(analyst_value):
         y = 342 - index * 57
-        pdf.setFont("Helvetica", 14)
-        set_fill(pdf, HexColor("#DCE7F2"))
         draw_wrapped(pdf, f"- {item}", 74, y, 340, size=14, color=HexColor("#DCE7F2"))
 
     rounded_card(pdf, 478, 118, 434, 310, fill=HexColor("#173354"), stroke=HexColor("#274B70"))
     pdf.setFont("Helvetica-Bold", 17)
-    set_fill(pdf, TEAL)
-    pdf.drawString(504, 388, "NEXT STEPS")
-    next_steps = [
-        "Evaluate FinBERT and learned event models on larger time-split data.",
-        "Calibrate impact against realized abnormal movement where licensing permits.",
-        "Add analyst feedback, drift monitoring, and scenario sensitivity.",
-        "Add tactical rebalancing only after the flagship risk path remains green.",
+    set_fill(pdf, GOLD)
+    pdf.drawString(504, 388, "RESPONSIBLE SCALE")
+    responsible_scale = [
+        "Keep human review; no trading, credit, or regulatory-capital claim.",
+        "Validate on larger independently reviewed, time-split public data.",
+        "Add semantic clustering, calibration, drift, and analyst feedback.",
+        "Promote infrastructure only when measured volume requires it.",
     ]
-    for index, item in enumerate(next_steps):
+    for index, item in enumerate(responsible_scale):
         y = 342 - index * 57
         draw_wrapped(pdf, f"- {item}", 504, y, 374, size=14, color=HexColor("#DCE7F2"))
     pdf.setFont("Helvetica-Bold", 20)
     set_fill(pdf, WHITE)
-    pdf.drawString(48, 78, "RiskPulse: evidence -> signal -> scenario -> portfolio driver")
+    pdf.drawString(48, 78, "RiskPulse: evidence -> policy -> scenario -> portfolio decision")
     footer(pdf, 7, dark=True)
     pdf.showPage()
 
@@ -503,6 +552,7 @@ def main() -> None:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     DOCS.mkdir(parents=True, exist_ok=True)
     metrics, stress = load_results()
+    evaluation = load_evaluation()
     pdf = canvas.Canvas(str(CANONICAL), pagesize=PAGE_SIZE, pageCompression=1)
     pdf.setTitle("RiskPulse - S&P Global & Crisil Campus Hackathon 2026")
     pdf.setAuthor(os.getenv("RISKPULSE_CANDIDATE_NAME", "Alok Chandra"))
@@ -512,7 +562,7 @@ def main() -> None:
     slide_3(pdf)
     slide_4(pdf)
     slide_5(pdf, stress)
-    slide_6(pdf, metrics)
+    slide_6(pdf, metrics, evaluation)
     slide_7(pdf)
     pdf.save()
     shutil.copy2(CANONICAL, REPO_COPY)

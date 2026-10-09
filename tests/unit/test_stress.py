@@ -69,6 +69,15 @@ def test_unknown_scenario_does_not_run() -> None:
     assert service().run(make_signal(9.0, EventLabel.PRODUCT_LAUNCH)) is None
 
 
+def test_rate_cut_does_not_select_adverse_rate_rise_scenario() -> None:
+    signal = make_signal(9.0, EventLabel.MACROECONOMIC)
+    signal.event.matched_terms = ["central bank", "rate cut"]
+    assert service().run(signal) is None
+
+    signal.event.matched_terms = ["central bank", "rate hike"]
+    assert service().run(signal) is not None
+
+
 def test_stress_run_reconciles_and_covers_asset_classes() -> None:
     run = service().run(make_signal())
     assert run is not None

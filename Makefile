@@ -2,7 +2,7 @@ PYTHON ?= python3.11
 VENV ?= .venv
 BIN := $(VENV)/bin
 
-.PHONY: setup models seed doctor demo live api dashboard test coverage quality evaluate release clean
+.PHONY: setup models seed doctor demo live api dashboard test coverage quality evaluate release submission clean
 
 setup:
 	$(PYTHON) -m venv $(VENV)
@@ -52,6 +52,9 @@ evaluate:
 
 release: quality coverage evaluate
 	$(BIN)/python scripts/release_check.py
+
+submission: release
+	$(BIN)/python scripts/release_check.py --submission
 
 clean:
 	$(BIN)/python -m riskpulse.cli reset --yes

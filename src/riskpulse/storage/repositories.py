@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 from contextlib import contextmanager
+from datetime import timedelta
 from pathlib import Path
 from typing import Any
 
-from sqlalchemy import create_engine, delete, func, select
+from sqlalchemy import and_, create_engine, delete, func, select
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -53,11 +54,17 @@ class Repository:
 
     def save_document(self, document: NormalizedDocument) -> bool:
         self.init_schema()
+        near_duplicate_start = document.published_at - timedelta(hours=24)
+        near_duplicate_end = document.published_at + timedelta(hours=24)
         with self.session() as session:
             duplicate = session.scalar(
                 select(RawDocumentRecord.document_id).where(
                     (RawDocumentRecord.document_id == document.document_id)
-                    | (RawDocumentRecord.content_hash == document.content_hash)
+                    | and_(
+                        RawDocumentRecord.content_hash == document.content_hash,
+                        RawDocumentRecord.published_at >= near_duplicate_start,
+                        RawDocumentRecord.published_at <= near_duplicate_end,
+                    )
                 )
             )
             if duplicate:
@@ -109,7 +116,7 @@ class Repository:
         return True
 
     def cluster_sources(self, event_cluster_id: str) -> set[str]:
-        """Return providers already observed for an entity/event/day cluster."""
+        """Return providers already observed for a bounded evidence-similarity cluster."""
         with self.session() as session:
             sources = session.scalars(
                 select(RiskSignalRecord.source).where(

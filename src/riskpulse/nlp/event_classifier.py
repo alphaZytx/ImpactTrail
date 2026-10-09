@@ -7,6 +7,17 @@ from typing import Any
 from riskpulse.config import load_yaml
 from riskpulse.domain.signals import EventLabel, EventResult
 
+_KEYWORD_VARIANTS = {
+    "launch": ("launch", "launches", "launched", "launching"),
+}
+
+
+def _matched_keyword(text: str, keyword: str) -> str | None:
+    variants = _KEYWORD_VARIANTS.get(keyword, (keyword,))
+    pattern = "|".join(re.escape(variant) for variant in variants)
+    match = re.search(rf"(?<!\w)(?:{pattern})(?!\w)", text)
+    return match.group(0) if match else None
+
 
 class RuleEventClassifier:
     backend = "taxonomy_rules_v1"
@@ -22,14 +33,17 @@ class RuleEventClassifier:
         for label, definition in self.labels.items():
             if label == "other":
                 continue
-            matches = [
-                term
-                for term in definition.get("keywords", [])
-                if re.search(rf"(?<!\w){re.escape(str(term).casefold())}(?!\w)", lowered)
-            ]
+            matches: list[str] = []
+            matched_surfaces: list[str] = []
+            for term in definition.get("keywords", []):
+                keyword = str(term).casefold()
+                matched_surface = _matched_keyword(lowered, keyword)
+                if matched_surface:
+                    matches.append(keyword)
+                    matched_surfaces.append(matched_surface)
             terms_by_label[label] = matches
             if matches:
-                longest_bonus = min(max(map(len, matches)) / 30, 0.35)
+                longest_bonus = min(max(map(len, matched_surfaces)) / 30, 0.35)
                 scores[label] = len(matches) + longest_bonus
         if not scores:
             return EventResult(

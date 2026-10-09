@@ -33,9 +33,16 @@ RiskPulse v1.0 combines four bounded components rather than presenting one opaqu
 ## Evaluation
 
 `python scripts/evaluate_models.py` evaluates the offline baselines on committed synthetic gold sets.
-The current result is 100.00% sentiment macro-F1 on 15 samples and 94.67% event macro-F1 on 20
-samples. The sets were designed for contract verification and are too small/synthetic to estimate
-real-world accuracy. Results are never presented without that limitation.
+The report covers sentiment and event classification as well as the required impact score. Impact is
+evaluated on 20 examples as an end-to-end offline baseline under a fixed protocol: a synthetic
+GDELT-shaped English news document, one source, novelty `1.0`, and a fully relevant synthetic entity
+with match confidence `1.0`. Sentiment and event inputs are produced by the release baselines rather
+than supplied as gold features.
+
+The current impact result is MAE `1.15` and Pearson correlation `0.8521` against human-specified
+synthetic severity-rubric scores. Per-event-label MAE and the complete protocol are stored in
+`docs/results/model_metrics.json`. These compact, vocabulary-constrained sets verify contracts and
+determinism; they do not estimate production generalization, calibration, or realized market impact.
 
 ## Impact score
 

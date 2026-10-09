@@ -35,6 +35,18 @@ def test_event_classifier_core_categories_and_abstention() -> None:
     assert classifier.classify("routine community meeting").label == EventLabel.OTHER
 
 
+def test_product_launch_inflections_are_boundary_safe() -> None:
+    classifier = RuleEventClassifier(ROOT / "configs/event_taxonomy.yaml")
+    assert (
+        classifier.classify(
+            "Aeon Technologies launches an approved cloud security product "
+            "after strong revenue growth"
+        ).label
+        == EventLabel.PRODUCT_LAUNCH
+    )
+    assert classifier.classify("Company expands its launchpad facility").label == EventLabel.OTHER
+
+
 def test_impact_is_explainable_and_bounded() -> None:
     classifier = RuleEventClassifier(ROOT / "configs/event_taxonomy.yaml")
     sentiment = LexiconSentimentAnalyzer().analyze("downgrade after default and missed payment")
