@@ -25,7 +25,7 @@ IMPACT_WEIGHTS = {
 }
 
 st.set_page_config(
-    page_title="RiskPulse | Financial Risk Intelligence",
+    page_title="ImpactTrail | Financial Risk Intelligence",
     page_icon="◈",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -137,7 +137,7 @@ def render_replay_summary(summary: dict[str, Any]) -> None:
 
 
 with st.sidebar:
-    st.markdown("## ◈ RiskPulse")
+    st.markdown("## ◈ ImpactTrail")
     st.caption("Financial risk intelligence")
     with st.expander("Advanced"):
         api_url = st.text_input("API URL", DEFAULT_API_URL)
@@ -188,7 +188,7 @@ try:
     stress_runs: list[dict[str, Any]] = api_get(api_url, "/api/v1/stress-tests?limit=100")
     portfolio = api_get(api_url, "/api/v1/portfolio/summary")
 except Exception as exc:
-    st.error("RiskPulse API is not ready.")
+    st.error("ImpactTrail API is not ready.")
     st.code("make demo\nmake api\n# In another terminal:\nmake dashboard", language="bash")
     st.caption(str(exc))
     st.stop()

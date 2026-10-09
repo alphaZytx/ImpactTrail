@@ -23,7 +23,7 @@ from riskpulse.storage.repositories import Repository
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 OUTPUT = ROOT / "output/pdf"
-CANONICAL = OUTPUT / "RiskPulse_Presentation.pdf"
+CANONICAL = OUTPUT / "ImpactTrail_Presentation.pdf"
 REPO_COPY = DOCS / "presentation.pdf"
 
 PAGE_SIZE = landscape((540, 960))
@@ -107,7 +107,7 @@ def footer(pdf: canvas.Canvas, slide: int, dark: bool = False) -> None:
     color = HexColor("#A9BED3") if dark else MUTED
     pdf.setFont("Helvetica", 9)
     set_fill(pdf, color)
-    pdf.drawString(48, 24, "RiskPulse | Educational prototype - not investment advice")
+    pdf.drawString(48, 24, "ImpactTrail | Educational prototype - not investment advice")
     pdf.drawRightString(WIDTH - 48, 24, f"{slide} / 7")
 
 
@@ -184,7 +184,7 @@ def slide_1(pdf: canvas.Canvas, metrics: dict[str, Any]) -> None:
     pdf.drawString(62, 465, "S&P GLOBAL & CRISIL CAMPUS HACKATHON 2026")
     pdf.setFont("Helvetica-Bold", 53)
     set_fill(pdf, WHITE)
-    pdf.drawString(62, 365, "RISKPULSE")
+    pdf.drawString(62, 365, "IMPACTTRAIL")
     pdf.setFont("Helvetica-Bold", 29)
     pdf.drawString(62, 318, "From narrative noise to portfolio impact")
     draw_wrapped(
@@ -249,7 +249,7 @@ def slide_2(pdf: canvas.Canvas) -> None:
     rounded_card(pdf, 478, 90, 434, 330, fill=HexColor("#EAF8F7"), stroke=TEAL)
     pdf.setFont("Helvetica-Bold", 18)
     set_fill(pdf, TEAL)
-    pdf.drawString(505, 380, "THE RISKPULSE APPROACH")
+    pdf.drawString(505, 380, "THE IMPACTTRAIL APPROACH")
     steps = [
         ("1", "Normalize", "News + social + replay"),
         ("2", "Understand", "Entity + sentiment + event"),
@@ -543,7 +543,7 @@ def slide_7(pdf: canvas.Canvas) -> None:
         draw_wrapped(pdf, f"- {item}", 504, y, 374, size=14, color=HexColor("#DCE7F2"))
     pdf.setFont("Helvetica-Bold", 20)
     set_fill(pdf, WHITE)
-    pdf.drawString(48, 78, "RiskPulse: evidence -> policy -> scenario -> portfolio decision")
+    pdf.drawString(48, 78, "ImpactTrail: evidence -> policy -> scenario -> portfolio decision")
     footer(pdf, 7, dark=True)
     pdf.showPage()
 
@@ -554,7 +554,7 @@ def main() -> None:
     metrics, stress = load_results()
     evaluation = load_evaluation()
     pdf = canvas.Canvas(str(CANONICAL), pagesize=PAGE_SIZE, pageCompression=1)
-    pdf.setTitle("RiskPulse - S&P Global & Crisil Campus Hackathon 2026")
+    pdf.setTitle("ImpactTrail - S&P Global & Crisil Campus Hackathon 2026")
     pdf.setAuthor(os.getenv("RISKPULSE_CANDIDATE_NAME", "Alok Chandra"))
     pdf.setSubject("AI/NLP financial risk engine and strategic portfolio stress testing")
     slide_1(pdf, metrics)

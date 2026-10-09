@@ -38,7 +38,7 @@ def create_app() -> FastAPI:
     settings = get_settings()
     configure_logging(settings.log_level)
     app = FastAPI(
-        title="RiskPulse API",
+        title="ImpactTrail API",
         version=__version__,
         summary="Auditable financial risk signals and portfolio stress testing",
         description=(

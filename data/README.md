@@ -1,4 +1,4 @@
-# RiskPulse Data Card
+# ImpactTrail Data Card
 
 All committed runtime data is compact, synthetic, and safe to redistribute. No confidential,
 client, customer, or proprietary S&P Global/Crisil information is used.

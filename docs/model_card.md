@@ -1,8 +1,8 @@
-# RiskPulse Model Card
+# ImpactTrail Model Card
 
 ## Model overview
 
-RiskPulse v1.0 combines four bounded components rather than presenting one opaque model:
+ImpactTrail v1.0 combines four bounded components rather than presenting one opaque model:
 
 1. Entity resolution from a versioned fictional issuer/alias registry.
 2. Finance sentiment from an offline lexicon or optional ProsusAI FinBERT.

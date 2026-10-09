@@ -1,6 +1,6 @@
-# Project Implementation Plan — RiskPulse
+# Project Implementation Plan — ImpactTrail
 
-> **Working title:** RiskPulse — Real-Time Financial Risk Intelligence  
+> **Working title:** ImpactTrail — Real-Time Financial Risk Intelligence
 > **Project type:** S&P Global & Crisil Campus Hackathon 2026 submission  
 > **Status:** Archived planning blueprint; see `docs/as_built.md` for shipped behavior
 > **Source of truth:** `problem_statement.md` and `project_guidlines.md`  
@@ -10,7 +10,7 @@
 
 ## 1. Executive Direction
 
-RiskPulse will ingest near-real-time financial news and social posts, convert unstructured text into auditable risk signals, and use high-impact events to run a transparent stress test against a synthetic wholesale-banking portfolio.
+ImpactTrail will ingest near-real-time financial news and social posts, convert unstructured text into auditable risk signals, and use high-impact events to run a transparent stress test against a synthetic wholesale-banking portfolio.
 
 The strongest submission strategy is:
 

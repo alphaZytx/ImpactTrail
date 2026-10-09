@@ -1,4 +1,4 @@
-# RiskPulse Data Card
+# ImpactTrail Data Card
 
 ## Summary
 

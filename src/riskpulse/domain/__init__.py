@@ -1,1 +1,1 @@
-"""Validated domain contracts shared across RiskPulse components."""
+"""Validated domain contracts shared across ImpactTrail components."""

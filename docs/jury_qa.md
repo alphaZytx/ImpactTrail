@@ -1,4 +1,4 @@
-# RiskPulse Jury Q&A Brief
+# ImpactTrail Jury Q&A Brief
 
 Use these as concise answers, not a memorized script. Lead with the design decision, then the evidence
 or limitation.
@@ -6,7 +6,7 @@ or limitation.
 ## Why is this more useful than sentiment analysis?
 
 Sentiment alone does not say what happened, how severe it may be, whether the result is trustworthy,
-or where the bank is exposed. RiskPulse joins source evidence, entity, event, severity, policy gates,
+or where the bank is exposed. ImpactTrail joins source evidence, entity, event, severity, policy gates,
 scenario, and position-level loss drivers in one traceable contract.
 
 ## Where is the AI/NLP?

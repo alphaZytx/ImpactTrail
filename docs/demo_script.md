@@ -17,7 +17,7 @@ Open the dashboard at `http://127.0.0.1:8501` and API docs at
 ### 0:00–0:25 — Problem
 
 “Risk teams receive news and social signals faster than they can normalize, assess, and connect to
-portfolio exposure. RiskPulse converts each narrative into an auditable risk signal and an automatic,
+portfolio exposure. ImpactTrail converts each narrative into an auditable risk signal and an automatic,
 explainable portfolio stress result.”
 
 ### 0:25–0:50 — Architecture

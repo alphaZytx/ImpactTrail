@@ -1,4 +1,4 @@
-# RiskPulse As-Built Design and Requirements Traceability
+# ImpactTrail As-Built Design and Requirements Traceability
 
 This document describes the code that is actually shipped. The root
 `project_implementation_plan.md` is retained as the original planning artifact; it is not a claim
@@ -6,7 +6,7 @@ that every stretch goal was implemented.
 
 ## System boundary
 
-RiskPulse is a Python modular monolith built for an auditable, offline-safe jury demonstration:
+ImpactTrail is a Python modular monolith built for an auditable, offline-safe jury demonstration:
 
 1. GDELT news, Bluesky social posts, or the committed replay adapter produce one `RawDocument`
    contract.

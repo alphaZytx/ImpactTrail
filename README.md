@@ -1,4 +1,4 @@
-# RiskPulse - S&P Global & Crisil Campus Hackathon 2026
+# ImpactTrail - S&P Global & Crisil Campus Hackathon 2026
 
 **Candidate Name:** Alok Chandra<br>
 **College Email ID:** `[REPLACE WITH COLLEGE EMAIL]`<br>
@@ -6,13 +6,13 @@
 **Demo Video Link:** `[ADD UNLISTED YOUTUBE LINK]`<br>
 **Slide Deck:** [docs/presentation.pdf](docs/presentation.pdf)
 
-> Educational prototype. RiskPulse is not investment advice and is not a regulatory stress-testing system.
+> Educational prototype. ImpactTrail is not investment advice and is not a regulatory stress-testing system.
 
 ## 1. Project Overview / Problem Statement & Approach
 
 Financial risk teams face more unstructured information than they can review consistently. News and
 social posts arrive with different formats, repeated coverage, ambiguous entities, and no direct link
-to portfolio exposure. RiskPulse turns that narrative stream into an auditable contract: financial
+to portfolio exposure. ImpactTrail turns that narrative stream into an auditable contract: financial
 sentiment from `-1` to `1`, an explicit financial-event category, and an explainable severity score
 from `1` to `10`.
 
@@ -20,20 +20,20 @@ The platform processes GDELT-shaped news and Bluesky-shaped social text through 
 deterministic offline replay makes the result reproducible; optional live adapters use the same code
 path. Signals carry confidence, evidence, provenance, reason codes, model versions, and idempotency
 keys. When a confidence-qualified signal has a direction-compatible supported scenario and impact
-strictly greater than `7`, RiskPulse automatically runs a transparent stress against a synthetic
+strictly greater than `7`, ImpactTrail automatically runs a transparent stress against a synthetic
 portfolio of loans, bonds, and derivatives. The dashboard connects the original narrative to
 portfolio loss drivers without manual data transfer.
 
 ## 2. Architecture & Tech Stack
 
-![RiskPulse architecture](docs/architecture.png)
+![ImpactTrail architecture](docs/architecture.png)
 
 The implementation is a modular Python monolith: source adapters → normalization/deduplication →
 entity linking → sentiment/event/impact analysis → SQLite signal store/API → automatic stress engine
 → Streamlit dashboard. This structure is simple to run for judges while retaining testable module
 boundaries.
 
-![RiskPulse priority dashboard](docs/dashboard_preview.png)
+![ImpactTrail priority dashboard](docs/dashboard_preview.png)
 
 - Python 3.11, FastAPI, Pydantic, SQLAlchemy, SQLite
 - HTTPX adapters for GDELT and Bluesky; deterministic JSONL replay
@@ -177,7 +177,7 @@ impact comparison uses a fixed one-source/fully-relevant-entity protocol and hum
 targets. Exact assumptions and per-event errors are in
 [docs/results/model_metrics.json](docs/results/model_metrics.json).
 
-RiskPulse demonstrates the domain workflow that matters: a risk analyst can move from an external
+ImpactTrail demonstrates the domain workflow that matters: a risk analyst can move from an external
 narrative to a confidence-gated, explainable signal and then to asset/sector/country portfolio loss
 drivers without manual copying. The system also shows its uncertainty and refuses automatic action
 when confidence or scenario applicability is insufficient.

@@ -71,7 +71,7 @@ def architecture() -> None:
     image = Image.new("RGB", (2400, 1350), PAPER)
     draw = ImageDraw.Draw(image)
     draw.rounded_rectangle((70, 60, 2330, 240), radius=34, fill=INK)
-    draw.text((125, 105), "RISKPULSE", font=font(30, bold=True), fill=GOLD)
+    draw.text((125, 105), "IMPACTTRAIL", font=font(30, bold=True), fill=GOLD)
     draw.text(
         (125, 150),
         "Auditable financial risk intelligence - source to portfolio impact",

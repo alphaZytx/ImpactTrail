@@ -30,7 +30,7 @@ def test_health_and_openapi() -> None:
     client = TestClient(create_app())
     assert client.get("/healthz").json()["status"] == "ok"
     schema = client.get("/openapi.json").json()
-    assert schema["info"]["title"] == "RiskPulse API"
+    assert schema["info"]["title"] == "ImpactTrail API"
 
 
 def test_manual_analyze_and_list() -> None:
