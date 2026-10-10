@@ -164,7 +164,7 @@ def architecture() -> None:
         "model/config versions",
         "confidence gates",
         "structured logs + health",
-        "tests + CI + Docker",
+        "tests + CI + health",
     ]
     x = 145
     for item in controls:

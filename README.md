@@ -41,7 +41,7 @@ boundaries.
 - Versioned rule-based event taxonomy with explicit abstention
 - Explainable seven-factor impact score and confidence gates
 - Streamlit, Plotly, and pandas dashboard
-- pytest, coverage, Ruff, mypy, GitHub Actions, Docker Compose
+- pytest, coverage, Ruff, mypy, and GitHub Actions
 
 As-built design and requirement evidence: [docs/as_built.md](docs/as_built.md)<br>
 Original planning artifact: [project_implementation_plan.md](project_implementation_plan.md)<br>
@@ -104,12 +104,6 @@ python3.11 -m venv .venv
 .venv/bin/python scripts/validate_data.py
 .venv/bin/python -m impacttrail.cli replay --fixture data/demo/mixed_source_events.jsonl
 .venv/bin/uvicorn impacttrail.api.app:create_app --factory --port 8000
-```
-
-### Docker Compose
-
-```bash
-docker compose up --build
 ```
 
 ### Optional FinBERT backend

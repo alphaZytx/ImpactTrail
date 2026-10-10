@@ -37,7 +37,7 @@ Module B is the primary choice because it consumes both event classification and
 | Storage | SQLite through a repository abstraction | Zero-configuration demo with a clean upgrade path |
 | API | FastAPI + Pydantic, versioned under `/api/v1` | Typed contracts and automatic OpenAPI documentation |
 | Dashboard | Streamlit + Plotly | Rapid, polished, interactive Python-native dashboard |
-| Packaging | Local one-command run plus Docker Compose | Reviewer-friendly and reproducible |
+| Packaging | Local one-command run through Makefile | Reviewer-friendly and reproducible |
 | Deployment | Local demo is mandatory; hosted demo is optional | Submission rules require a functional demonstration, not a production cloud platform |
 
 This plan was written before implementation and is retained to show the design process. It includes
@@ -117,7 +117,7 @@ The project is complete only when all of the following are true:
 - Historical event replay and a results comparison against baselines.
 - Sensitivity analysis for stress assumptions.
 - Model/data quality page and error/source-health visibility.
-- Docker packaging, CI, dependency/security checks, and optional hosted read-only demo.
+- CI, dependency/security checks, and optional hosted read-only demo.
 - Carefully documented model card, data card, architecture decisions, and limitations.
 
 ### 3.3 P2 — stretch differentiators
@@ -291,7 +291,7 @@ The final `docs/architecture.png` must reflect actual implemented components and
 
 ### 6.2 Why a modular monolith
 
-- One process/container is easier for a judge to install and run.
+- One local process pair is easier for a judge to install and run.
 - Internal boundaries still permit independent testing and later extraction.
 - SQLite is sufficient for the expected dataset and demonstration load.
 - A background worker may be a separate command, but it uses the same package and database.
@@ -333,7 +333,7 @@ The final `docs/architecture.png` must reflect actual implemented components and
 | Testing | pytest, pytest-cov, Hypothesis where valuable | Unit through E2E plus invariants |
 | Quality | Ruff + mypy | Formatting/linting and type checks |
 | Security | pip-audit and secret scanning in CI | Findings triaged before release |
-| Packaging | Docker + Docker Compose + Makefile | Reproducible launch and short commands |
+| Packaging | Makefile + pinned Python dependencies | Reproducible launch and short commands |
 | CI | GitHub Actions | Quality, test, data validation, build, and artifact checks |
 
 Primary references to record in project documentation:
@@ -891,8 +891,6 @@ For a hackathon-scale local build, an in-app metrics summary and structured logs
 ├── requirements-dev.txt
 ├── .env.example
 ├── .gitignore
-├── Dockerfile
-├── docker-compose.yml
 ├── configs/
 │   ├── event_taxonomy.yaml
 │   ├── sources.yaml
@@ -1117,7 +1115,7 @@ Exit gate:
 Tasks:
 
 - Complete unit/integration/E2E coverage and performance profiling.
-- Add Docker/Compose, `make doctor`, offline-mode verification, and recovery checks.
+- Add `make doctor`, offline-mode verification, and recovery checks.
 - Run lint, type, dependency, license, secret, data, and Git-history scans.
 - Test README from a fresh clone/environment.
 - Freeze dependency/model/config/data versions for the release candidate.
@@ -1161,7 +1159,7 @@ Begin only after Phase 8 is release-ready. Develop on a separate branch and merg
 4. **Integration:** mocked-provider pipeline and temporary SQLite database.
 5. **E2E:** compact deterministic replay and stress reconciliation.
 6. **Security:** secret scan, dependency audit, license review output.
-7. **Build:** Docker image build and start/health smoke test.
+7. **Build:** clean-room local start and health smoke test.
 8. **Artifacts:** evaluation summary and test/coverage reports.
 
 Do not make tests depend on live provider availability. Put optional live smoke checks in a manually triggered workflow.
@@ -1261,7 +1259,7 @@ The README should let a judge understand the value in two minutes and run the de
 | Stress formulas appear overclaimed | Medium / High | Assumptions, reason codes, disclaimer, sensitivity | Explicitly call it simplified/illustrative |
 | Scope creep from building both modules | High / High | Module A phase gate | Ship polished Core + Module B only |
 | Dashboard/API totals diverge | Medium / Medium | Shared services and E2E assertions | API is source of truth; refresh/reset |
-| Fresh clone fails | Medium / High | Container, pinned deps, clean-room test | Provide tested direct command and troubleshooting |
+| Fresh clone fails | Medium / High | Pinned deps, clean-room test | Provide tested direct command and troubleshooting |
 | Demo exceeds time | Medium / High | 4:50 script and repeated rehearsal | Skip optional diagnostics, preserve end-to-end story |
 | Broken/restricted submission links | Medium / Disqualifying | Incognito release checklist | Repository-host the deck; verify video immediately |
 | Secrets/personal details leak | Low / High | Scanning and media sanitization | Rotate/remove, clean history, re-record before publish |
