@@ -1,14 +1,14 @@
 # ImpactTrail - S&P Global & Crisil Campus Hackathon 2026
 
 **Candidate Name:** Alok Chandra<br>
-**College Email ID:** `[REPLACE WITH COLLEGE EMAIL]`<br>
-**College / Campus:** `[REPLACE WITH COLLEGE NAME]`<br>
-**Demo Video Link:** `[ADD UNLISTED YOUTUBE LINK]`<br>
+**College Email ID:** `[Add NIT Patna email before submission]`<br>
+**College / Campus:** National Institute of Technology, Patna<br>
+**Demo Video Link:** `[Add unlisted YouTube link before submission]`<br>
 **Slide Deck:** [docs/presentation.pdf](docs/presentation.pdf)
 
 > Educational prototype. ImpactTrail is not investment advice and is not a regulatory stress-testing system.
 
-## 1. Project Overview / Problem Statement & Approach
+## 1. Project Overview
 
 Financial risk teams face more unstructured information than they can review consistently. News and
 social posts arrive with different formats, repeated coverage, ambiguous entities, and no direct link
@@ -44,7 +44,6 @@ boundaries.
 - pytest, coverage, Ruff, mypy, and GitHub Actions
 
 As-built design and requirement evidence: [docs/as_built.md](docs/as_built.md)<br>
-Original planning artifact: [project_implementation_plan.md](project_implementation_plan.md)<br>
 Model card: [docs/model_card.md](docs/model_card.md)<br>
 Assumptions: [docs/assumptions.md](docs/assumptions.md)<br>
 Jury Q&A brief: [docs/jury_qa.md](docs/jury_qa.md)
@@ -68,8 +67,8 @@ are clearly labeled and never represented as real GDELT/Bluesky content.
 Runtime: **Python 3.11**. Tested on macOS; CI tests Linux on GitHub Actions.
 
 ```bash
-git clone <your-public-repository-url>
-cd <college>-<candidate-name>-hackathon
+git clone https://github.com/alphaZytx/ImpactTrail.git
+cd ImpactTrail
 make setup
 make seed
 make doctor
@@ -192,8 +191,7 @@ impact components, API contracts, retry behavior, cross-source corroboration, st
 boundaries, idempotency, all three asset classes, and portfolio reconciliation.
 
 `make submission` additionally rejects placeholder identity/deck fields, a missing final GitHub clone
-URL, a missing YouTube demo URL, and an invalid repository name. Public access still needs a manual
-incognito-window check.
+URL, and a missing YouTube demo URL. Public access still needs a manual incognito-window check.
 
 ## 8. API Examples
 

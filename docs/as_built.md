@@ -1,8 +1,7 @@
 # ImpactTrail As-Built Design and Requirements Traceability
 
-This document describes the code that is actually shipped. The root
-`project_implementation_plan.md` is retained as the original planning artifact; it is not a claim
-that every stretch goal was implemented.
+This document describes the code that is actually shipped. It is the repository's implementation
+reference and distinguishes delivered capabilities from deliberate boundaries.
 
 ## System boundary
 
@@ -100,5 +99,5 @@ make submission
 ```
 
 The strict gate also rejects placeholder candidate details, a missing public GitHub clone URL, a
-missing YouTube demo URL, repository naming violations, and placeholder text in the deck. Public
-access and unlisted-video playback must still be checked manually in a private browser window.
+missing YouTube demo URL, and placeholder text in the deck. Public access and unlisted-video
+playback must still be checked manually in a private browser window.

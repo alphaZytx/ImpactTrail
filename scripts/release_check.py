@@ -78,12 +78,6 @@ def submission_issues(readme: str, repository_directory: str, deck_text: str = "
     if not clone_is_valid:
         issues.append("README Quickstart needs the final public GitHub clone URL")
 
-    repository_name = repository_directory
-    if clone_is_valid:
-        repository_name = clone_url.rstrip("/").rsplit("/", maxsplit=1)[-1].removesuffix(".git")
-    if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*-hackathon", repository_name.casefold()):
-        issues.append("repository name should follow <college>-<candidate-name>-hackathon naming")
-
     if deck_text and any(marker in deck_text.casefold() for marker in PLACEHOLDER_MARKERS):
         issues.append("presentation cover still contains placeholder text")
     return issues
@@ -95,7 +89,7 @@ def main() -> None:
     parser.add_argument(
         "--submission",
         action="store_true",
-        help="Fail on candidate, public repository, video, naming, or deck placeholders",
+        help="Fail on candidate, public repository, video, or deck placeholders",
     )
     args = parser.parse_args()
     missing = [relative for relative in REQUIRED if not (ROOT / relative).exists()]

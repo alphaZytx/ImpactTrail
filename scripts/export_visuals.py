@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -63,8 +64,23 @@ def center_text(
 
 def arrow(draw: ImageDraw.ImageDraw, start: tuple[int, int], end: tuple[int, int]) -> None:
     draw.line([start, end], fill=TEAL, width=8)
-    x, y = end
-    draw.polygon([(x, y), (x - 22, y - 14), (x - 22, y + 14)], fill=TEAL)
+    start_x, start_y = start
+    end_x, end_y = end
+    angle = math.atan2(end_y - start_y, end_x - start_x)
+    arrow_length = 22
+    arrow_width = 14
+    base_x = end_x - arrow_length * math.cos(angle)
+    base_y = end_y - arrow_length * math.sin(angle)
+    perpendicular_x = arrow_width * math.sin(angle)
+    perpendicular_y = arrow_width * math.cos(angle)
+    draw.polygon(
+        [
+            (end_x, end_y),
+            (base_x + perpendicular_x, base_y - perpendicular_y),
+            (base_x - perpendicular_x, base_y + perpendicular_y),
+        ],
+        fill=TEAL,
+    )
 
 
 def architecture() -> None:
@@ -147,7 +163,7 @@ def architecture() -> None:
             (source[2] + 10, (source[1] + source[3]) // 2),
             (boxes["ingest"][0] - 20, target_y),
         )
-    arrow(draw, (725, 635), (725, 665))
+    arrow(draw, (720, 625), (725, 675))
     arrow(draw, (905, 772), (1025, 650))
     arrow(draw, (1445, 580), (1565, 445))
     arrow(draw, (1760, 550), (1760, 620))

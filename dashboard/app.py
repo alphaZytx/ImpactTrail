@@ -37,7 +37,8 @@ st.markdown(
     :root { --ink:#10233f; --teal:#16a6a1; --gold:#f4b942; --paper:#f5f7fb; }
     .stApp { background: linear-gradient(180deg,#f8fafc 0%,#eef3f8 100%); }
     .block-container { padding-top:2.25rem; padding-bottom:2rem; }
-    [data-testid="stToolbar"], #MainMenu { visibility:hidden; }
+    #MainMenu, [data-testid="stToolbarActions"] { display:none; }
+    [data-testid="stExpandSidebarButton"] { visibility:visible !important; }
     [data-testid="stSidebar"] { background:#10233f; color:white; }
     [data-testid="stSidebar"] * { color:white; }
     [data-testid="stSidebar"] button[kind="secondary"] {

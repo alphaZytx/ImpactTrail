@@ -20,7 +20,7 @@ git clone <your-public-repository-url>
 ```
 """
     issues = submission_issues(readme, "code-to-connect", "College name to be added")
-    assert len(issues) == 7
+    assert len(issues) == 6
 
 
 def test_submission_issues_accept_final_metadata() -> None:

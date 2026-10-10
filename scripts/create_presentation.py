@@ -199,7 +199,7 @@ def slide_1(pdf: canvas.Canvas, metrics: dict[str, Any]) -> None:
         color=HexColor("#C8D6E5"),
     )
     candidate = os.getenv("IMPACTTRAIL_CANDIDATE_NAME", "Alok Chandra")
-    college = os.getenv("IMPACTTRAIL_COLLEGE", "College name to be added before submission")
+    college = os.getenv("IMPACTTRAIL_COLLEGE", "National Institute of Technology, Patna")
     pdf.setFont("Helvetica-Bold", 13)
     set_fill(pdf, WHITE)
     pdf.drawString(62, 163, candidate)
