@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
-from typing import Any, cast
+from typing import Any, Literal, cast
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Query, status
@@ -13,10 +13,18 @@ from impacttrail.config import get_settings
 from impacttrail.domain.documents import RawDocument, SourceType
 from impacttrail.domain.signals import EventLabel, RiskSignal, SignalList
 from impacttrail.domain.stress import StressRun
+from impacttrail.ingestion.bluesky import BlueskyAdapter
+from impacttrail.ingestion.gdelt import GdeltAdapter
 from impacttrail.ingestion.replay import ReplayAdapter
 from impacttrail.logging import configure_logging
 from impacttrail.services.factory import get_pipeline, get_repository
 from impacttrail.stress_testing.portfolio import load_portfolio
+
+LiveSource = Literal["gdelt", "bluesky"]
+
+
+def default_live_sources() -> list[LiveSource]:
+    return ["gdelt", "bluesky"]
 
 
 class AnalyzeRequest(BaseModel):
@@ -32,6 +40,19 @@ class ReplayRequest(BaseModel):
 
 class StressRequest(BaseModel):
     signal_id: str
+
+
+class AnalyzePreviewResponse(BaseModel):
+    persisted: bool = False
+    signals: list[RiskSignal]
+    stress_runs: list[StressRun]
+
+
+class LiveIngestionRequest(BaseModel):
+    query: str = Field(default="financial markets", min_length=2, max_length=200)
+    sources: list[LiveSource] = Field(
+        default_factory=default_live_sources, min_length=1, max_length=2
+    )
 
 
 def create_app() -> FastAPI:
@@ -94,6 +115,29 @@ def create_app() -> FastAPI:
             raise HTTPException(status_code=409, detail="Duplicate document")
         return cast(list[RiskSignal], result["signals"])
 
+    @app.post(
+        "/api/v1/analyze/preview",
+        response_model=AnalyzePreviewResponse,
+        tags=["signals"],
+    )
+    def analyze_preview(request: AnalyzeRequest) -> AnalyzePreviewResponse:
+        """Return a full signal-and-stress trace without mutating the demo repository."""
+        now = datetime.now(UTC)
+        raw = RawDocument(
+            source_record_id=request.source_record_id or f"preview-{uuid4()}",
+            source="manual_preview",
+            source_type=SourceType.NEWS,
+            text=request.text,
+            published_at=request.published_at or now,
+            ingested_at=now,
+            raw_metadata={"language": "en", "persisted": False},
+        )
+        result = get_pipeline().preview_raw(raw)
+        return AnalyzePreviewResponse(
+            signals=cast(list[RiskSignal], result["signals"]),
+            stress_runs=cast(list[StressRun], result["stress_runs"]),
+        )
+
     @app.post("/api/v1/replays", tags=["ingestion"])
     async def replay(request: ReplayRequest) -> dict[str, Any]:
         fixture = (settings.project_root / request.fixture).resolve()
@@ -106,6 +150,25 @@ def create_app() -> FastAPI:
             get_repository().clear_runtime()
         summary = await get_pipeline().process_adapter(ReplayAdapter(fixture))
         return {"status": "complete", "reset": request.reset, **summary.as_dict()}
+
+    @app.post("/api/v1/ingestion/live", tags=["ingestion"])
+    async def live_ingestion(request: LiveIngestionRequest) -> dict[str, Any]:
+        """Fetch one bounded batch from selected public live sources."""
+        adapters = {"gdelt": GdeltAdapter(), "bluesky": BlueskyAdapter()}
+        source_results: dict[str, dict[str, int]] = {}
+        for source in dict.fromkeys(request.sources):
+            summary = await get_pipeline().process_adapter(adapters[source], request.query)
+            source_results[source] = summary.as_dict()
+        totals = {
+            field: sum(result[field] for result in source_results.values())
+            for field in ("fetched", "processed", "duplicates", "signals", "stress_runs", "failed")
+        }
+        return {
+            "status": "complete" if totals["failed"] == 0 else "completed_with_failures",
+            "query": request.query,
+            "sources": source_results,
+            "totals": totals,
+        }
 
     @app.get("/api/v1/signals", response_model=SignalList, tags=["signals"])
     def signals(

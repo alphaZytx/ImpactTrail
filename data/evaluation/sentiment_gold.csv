@@ -1,17 +1,91 @@
-text,label
-"Nova Bank reports record profit and strong revenue growth",positive
-"Aeon Technologies raises guidance after earnings beat forecasts",positive
-"Orion Pharma receives approval for a successful product launch",positive
-"Cedar Logistics is upgraded as margins improve",positive
-"Atlas Motors reports resilient demand and gains market share",positive
-"Vertex Telecom posts quarterly results in line with expectations",neutral
-"Meridian Retail schedules its annual shareholder meeting",neutral
-"Lumen Aerospace names a new non-executive director",neutral
-"Terra Mining publishes its routine sustainability report",neutral
-"Helios Energy confirms operations continue normally",neutral
-"Nova Bank is downgraded after a missed payment",negative
-"Aeon Technologies reports a ransomware breach and outage",negative
-"Atlas Motors issues a profit warning after revenue decline",negative
-"Orion Pharma recalls a product after an investigation",negative
-"Terra Mining faces sanctions and a liquidity crisis",negative
-
+example_id,text,label,slice
+sent-001,Nova Bank reports strong revenue growth in its latest market update,positive,base
+sent-002,Aeon Technologies records a profit beat in its latest market update,positive,base
+sent-003,Orion Pharma is upgraded after resilient demand in its latest market update,positive,base
+sent-004,Cedar Logistics raises guidance following record orders in its latest market update,positive,base
+sent-005,Atlas Motors gains market share with strong execution in its latest market update,positive,base
+sent-006,Vertex Telecom receives approval for an approved expansion in its latest market update,positive,base
+sent-007,Meridian Retail reports a surge in profit in its latest market update,positive,base
+sent-008,Lumen Aerospace beats forecasts as growth accelerates in its latest market update,positive,base
+sent-009,Terra Mining remains resilient and records a gain in its latest market update,positive,base
+sent-010,Helios Energy announces a successful launch and strong demand in its latest market update,positive,base
+sent-011,Aeon Technologies reports strong revenue growth for the current reporting period,positive,paraphrase
+sent-012,Orion Pharma records a profit beat for the current reporting period,positive,paraphrase
+sent-013,Cedar Logistics is upgraded after resilient demand for the current reporting period,positive,paraphrase
+sent-014,Atlas Motors raises guidance following record orders for the current reporting period,positive,paraphrase
+sent-015,Vertex Telecom gains market share with strong execution for the current reporting period,positive,paraphrase
+sent-016,Meridian Retail receives approval for an approved expansion for the current reporting period,positive,paraphrase
+sent-017,Lumen Aerospace reports a surge in profit for the current reporting period,positive,paraphrase
+sent-018,Terra Mining beats forecasts as growth accelerates for the current reporting period,positive,paraphrase
+sent-019,Helios Energy remains resilient and records a gain for the current reporting period,positive,paraphrase
+sent-020,Nova Bank announces a successful launch and strong demand for the current reporting period,positive,paraphrase
+sent-021,Orion Pharma reports strong revenue growth during the annual business review,positive,paraphrase
+sent-022,Cedar Logistics records a profit beat during the annual business review,positive,paraphrase
+sent-023,Atlas Motors is upgraded after resilient demand during the annual business review,positive,paraphrase
+sent-024,Vertex Telecom raises guidance following record orders during the annual business review,positive,paraphrase
+sent-025,Meridian Retail gains market share with strong execution during the annual business review,positive,paraphrase
+sent-026,Lumen Aerospace receives approval for an approved expansion during the annual business review,positive,paraphrase
+sent-027,Terra Mining reports a surge in profit during the annual business review,positive,paraphrase
+sent-028,Helios Energy beats forecasts as growth accelerates during the annual business review,positive,paraphrase
+sent-029,Nova Bank remains resilient and records a gain during the annual business review,positive,paraphrase
+sent-030,Aeon Technologies announces a successful launch and strong demand during the annual business review,positive,paraphrase
+sent-031,Nova Bank publishes its annual meeting calendar in its latest market update,neutral,base
+sent-032,Aeon Technologies schedules an investor briefing in its latest market update,neutral,base
+sent-033,Orion Pharma appoints a non-executive director in its latest market update,neutral,base
+sent-034,Cedar Logistics files a routine corporate disclosure in its latest market update,neutral,base
+sent-035,Atlas Motors confirms operations continue at current levels in its latest market update,neutral,base
+sent-036,Vertex Telecom updates its governance policy in its latest market update,neutral,base
+sent-037,Meridian Retail completes planned maintenance in its latest market update,neutral,base
+sent-038,Lumen Aerospace announces participation in an industry conference in its latest market update,neutral,base
+sent-039,Terra Mining publishes a standard shareholder notice in its latest market update,neutral,base
+sent-040,Helios Energy holds its scheduled community meeting in its latest market update,neutral,base
+sent-041,Aeon Technologies publishes its annual meeting calendar for the current reporting period,neutral,paraphrase
+sent-042,Orion Pharma schedules an investor briefing for the current reporting period,neutral,paraphrase
+sent-043,Cedar Logistics appoints a non-executive director for the current reporting period,neutral,paraphrase
+sent-044,Atlas Motors files a routine corporate disclosure for the current reporting period,neutral,paraphrase
+sent-045,Vertex Telecom confirms operations continue at current levels for the current reporting period,neutral,paraphrase
+sent-046,Meridian Retail updates its governance policy for the current reporting period,neutral,paraphrase
+sent-047,Lumen Aerospace completes planned maintenance for the current reporting period,neutral,paraphrase
+sent-048,Terra Mining announces participation in an industry conference for the current reporting period,neutral,paraphrase
+sent-049,Helios Energy publishes a standard shareholder notice for the current reporting period,neutral,paraphrase
+sent-050,Nova Bank holds its scheduled community meeting for the current reporting period,neutral,paraphrase
+sent-051,Orion Pharma publishes its annual meeting calendar during the annual business review,neutral,paraphrase
+sent-052,Cedar Logistics schedules an investor briefing during the annual business review,neutral,paraphrase
+sent-053,Atlas Motors appoints a non-executive director during the annual business review,neutral,paraphrase
+sent-054,Vertex Telecom files a routine corporate disclosure during the annual business review,neutral,paraphrase
+sent-055,Meridian Retail confirms operations continue at current levels during the annual business review,neutral,paraphrase
+sent-056,Lumen Aerospace updates its governance policy during the annual business review,neutral,paraphrase
+sent-057,Terra Mining completes planned maintenance during the annual business review,neutral,paraphrase
+sent-058,Helios Energy announces participation in an industry conference during the annual business review,neutral,paraphrase
+sent-059,Nova Bank publishes a standard shareholder notice during the annual business review,neutral,paraphrase
+sent-060,Aeon Technologies holds its scheduled community meeting during the annual business review,neutral,paraphrase
+sent-061,Nova Bank is downgraded after a missed payment in its latest market update,negative,base
+sent-062,Aeon Technologies reports a ransomware breach and outage in its latest market update,negative,base
+sent-063,Orion Pharma issues a profit warning after a revenue decline in its latest market update,negative,base
+sent-064,Cedar Logistics faces sanctions and a liquidity crisis in its latest market update,negative,base
+sent-065,Atlas Motors records a loss as demand plunges in its latest market update,negative,base
+sent-066,Vertex Telecom enters bankruptcy after a default in its latest market update,negative,base
+sent-067,Meridian Retail faces an investigation and a large fine in its latest market update,negative,base
+sent-068,Lumen Aerospace announces a recall after a safety breach in its latest market update,negative,base
+sent-069,Terra Mining misses forecasts as inflation pressures margins in its latest market update,negative,base
+sent-070,Helios Energy suffers a cyber breach and operational outage in its latest market update,negative,base
+sent-071,Aeon Technologies is downgraded after a missed payment for the current reporting period,negative,paraphrase
+sent-072,Orion Pharma reports a ransomware breach and outage for the current reporting period,negative,paraphrase
+sent-073,Cedar Logistics issues a profit warning after a revenue decline for the current reporting period,negative,paraphrase
+sent-074,Atlas Motors faces sanctions and a liquidity crisis for the current reporting period,negative,paraphrase
+sent-075,Vertex Telecom records a loss as demand plunges for the current reporting period,negative,paraphrase
+sent-076,Meridian Retail enters bankruptcy after a default for the current reporting period,negative,paraphrase
+sent-077,Lumen Aerospace faces an investigation and a large fine for the current reporting period,negative,paraphrase
+sent-078,Terra Mining announces a recall after a safety breach for the current reporting period,negative,paraphrase
+sent-079,Helios Energy misses forecasts as inflation pressures margins for the current reporting period,negative,paraphrase
+sent-080,Nova Bank suffers a cyber breach and operational outage for the current reporting period,negative,paraphrase
+sent-081,Orion Pharma is downgraded after a missed payment during the annual business review,negative,paraphrase
+sent-082,Cedar Logistics reports a ransomware breach and outage during the annual business review,negative,paraphrase
+sent-083,Atlas Motors issues a profit warning after a revenue decline during the annual business review,negative,paraphrase
+sent-084,Vertex Telecom faces sanctions and a liquidity crisis during the annual business review,negative,paraphrase
+sent-085,Meridian Retail records a loss as demand plunges during the annual business review,negative,paraphrase
+sent-086,Lumen Aerospace enters bankruptcy after a default during the annual business review,negative,paraphrase
+sent-087,Terra Mining faces an investigation and a large fine during the annual business review,negative,paraphrase
+sent-088,Helios Energy announces a recall after a safety breach during the annual business review,negative,paraphrase
+sent-089,Nova Bank misses forecasts as inflation pressures margins during the annual business review,negative,paraphrase
+sent-090,Aeon Technologies suffers a cyber breach and operational outage during the annual business review,negative,paraphrase

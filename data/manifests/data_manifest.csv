@@ -1,6 +1,6 @@
 path,source,license,purpose,sha256,generated_or_reviewed_on,redistribution
-demo/mixed_source_events.jsonl,synthetic,MIT project data,Deterministic demo replay,46a50f7c25ed2cbdec698531c8b89cb977db7f3b32c084dcb9dcfb04a7505002,2026-10-08,allowed
-evaluation/sentiment_gold.csv,synthetic,MIT project data,Sentiment evaluation,b5e1b2f2f3caa32396899132ffe5bdedf89cda86a0a3f479f85f8bcefb4b5cdc,2026-10-08,allowed
-evaluation/events_gold.csv,synthetic,MIT project data,Event/impact evaluation,45f4cedfbd08046e0ad874529645be69417b57fcdf3aeb258b61d77dd0e0d571,2026-10-08,allowed
-reference/companies.csv,synthetic,MIT project data,Entity registry,4d126a619466651b3655f4283d97ddccc62787a55b65d71e3872d5fe889d8a61,2026-10-08,allowed
-synthetic/wholesale_portfolio.csv,synthetic,MIT project data,Stress-test portfolio,83798c615ff2bc1fa34a8e5f0332787cffa99b3872a77d8a92719a10440369d3,2026-10-08,allowed
+demo/mixed_source_events.jsonl,synthetic,MIT project data,Deterministic demo replay,46a50f7c25ed2cbdec698531c8b89cb977db7f3b32c084dcb9dcfb04a7505002,2026-10-11,allowed
+evaluation/sentiment_gold.csv,synthetic,MIT project data,Balanced sentiment challenge evaluation,c4df94644a52091afad46e7d8675f0fde5ffbfb301920a26b5e86a8185bdebbf,2026-10-11,allowed
+evaluation/events_gold.csv,synthetic,MIT project data,Balanced event and impact challenge evaluation,40ce1fe510a7a25cfd15a37da091445803648a133a87178387d697340b7bf7c4,2026-10-11,allowed
+reference/companies.csv,synthetic,MIT project data,Entity registry,4d126a619466651b3655f4283d97ddccc62787a55b65d71e3872d5fe889d8a61,2026-10-11,allowed
+synthetic/wholesale_portfolio.csv,synthetic,MIT project data,Stress-test portfolio,83798c615ff2bc1fa34a8e5f0332787cffa99b3872a77d8a92719a10440369d3,2026-10-11,allowed

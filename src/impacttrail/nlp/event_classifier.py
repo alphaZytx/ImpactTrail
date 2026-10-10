@@ -9,6 +9,7 @@ from impacttrail.domain.signals import EventLabel, EventResult
 
 _KEYWORD_VARIANTS = {
     "launch": ("launch", "launches", "launched", "launching"),
+    "unveiled": ("unveil", "unveils", "unveiled", "unveiling"),
 }
 
 

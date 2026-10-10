@@ -47,6 +47,17 @@ def test_product_launch_inflections_are_boundary_safe() -> None:
     assert classifier.classify("Company expands its launchpad facility").label == EventLabel.OTHER
 
 
+def test_product_unveil_inflections_are_classified() -> None:
+    classifier = RuleEventClassifier(ROOT / "configs/event_taxonomy.yaml")
+
+    for text in (
+        "Aeon Technologies unveils a cloud platform",
+        "Aeon Technologies unveiled a cloud platform",
+        "Aeon Technologies is unveiling a cloud platform",
+    ):
+        assert classifier.classify(text).label == EventLabel.PRODUCT_LAUNCH
+
+
 def test_impact_is_explainable_and_bounded() -> None:
     classifier = RuleEventClassifier(ROOT / "configs/event_taxonomy.yaml")
     sentiment = LexiconSentimentAnalyzer().analyze("downgrade after default and missed payment")

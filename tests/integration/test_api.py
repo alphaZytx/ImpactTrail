@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -8,6 +9,7 @@ from fastapi.testclient import TestClient
 
 from impacttrail.api.app import create_app
 from impacttrail.config import get_settings
+from impacttrail.domain.documents import RawDocument, SourceType
 from impacttrail.services.factory import get_pipeline, get_repository
 
 
@@ -51,6 +53,74 @@ def test_manual_analyze_and_list() -> None:
     listing = client.get("/api/v1/signals?min_impact=7").json()
     assert listing["total"] == 1
     assert client.get(f"/api/v1/signals/{signal['signal_id']}").status_code == 200
+
+
+def test_preview_returns_signal_and_stress_without_mutating_repository() -> None:
+    repository = get_repository()
+    repository.clear_runtime()
+    client = TestClient(create_app())
+
+    payload = {
+        "text": (
+            "Nova Bank downgraded after a default and missed payment amid a severe liquidity crisis"
+        )
+    }
+    first = client.post("/api/v1/analyze/preview", json=payload)
+    second = client.post("/api/v1/analyze/preview", json=payload)
+
+    assert first.status_code == 200
+    assert second.status_code == 200
+    result = first.json()
+    assert result["persisted"] is False
+    assert result["signals"][0]["event"]["label"] == "credit_event"
+    assert result["signals"][0]["metadata"]["preview"] is True
+    assert len(result["stress_runs"]) == 1
+    metrics = repository.metrics()
+    assert metrics["documents"] == 0
+    assert metrics["signals"] == 0
+    assert metrics["actionable_signals"] == 0
+    assert metrics["stress_runs"] == 0
+    assert metrics["dead_letters"] == 0
+    assert metrics["documents_by_source"] == {}
+
+
+def test_live_ingestion_endpoint_uses_selected_public_source(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class StubGdeltAdapter:
+        name = "gdelt"
+
+        async def fetch(self, query: str):  # type: ignore[no-untyped-def]
+            assert query == "Nova Bank"
+            yield RawDocument(
+                source_record_id="stub-live-gdelt-1",
+                source="gdelt",
+                source_type=SourceType.NEWS,
+                text="Nova Bank downgraded after default and missed payment",
+                published_at=datetime(2026, 10, 11, tzinfo=UTC),
+            )
+
+        def drain_failures(self) -> list[object]:
+            return []
+
+    monkeypatch.setattr("impacttrail.api.app.GdeltAdapter", StubGdeltAdapter)
+    client = TestClient(create_app())
+
+    response = client.post(
+        "/api/v1/ingestion/live", json={"query": "Nova Bank", "sources": ["gdelt"]}
+    )
+
+    assert response.status_code == 200
+    result = response.json()
+    assert result["status"] == "complete"
+    assert result["sources"]["gdelt"]["fetched"] == 1
+    assert result["totals"]["signals"] == 1
+    assert (
+        client.post(
+            "/api/v1/ingestion/live", json={"query": "x", "sources": ["unknown"]}
+        ).status_code
+        == 422
+    )
 
 
 def test_replay_stress_portfolio_and_metrics_endpoints() -> None:

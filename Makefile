@@ -2,7 +2,7 @@ PYTHON ?= python3.11
 VENV ?= .venv
 BIN := $(VENV)/bin
 
-.PHONY: setup models seed doctor demo live api dashboard test coverage quality evaluate release submission clean
+.PHONY: setup models seed evaluation-data doctor demo live api dashboard test coverage quality evaluate release submission clean
 
 setup:
 	$(PYTHON) -m venv $(VENV)
@@ -13,7 +13,10 @@ models:
 	$(BIN)/python -m pip install -r requirements-ml.txt
 	$(BIN)/python scripts/download_models.py
 
-seed:
+evaluation-data:
+	$(BIN)/python scripts/generate_evaluation_data.py
+
+seed: evaluation-data
 	$(BIN)/python scripts/generate_portfolio.py
 	$(BIN)/python scripts/update_data_manifest.py
 	$(BIN)/python scripts/validate_data.py

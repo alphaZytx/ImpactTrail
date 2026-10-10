@@ -28,9 +28,9 @@ latency, and traceability.
 
 Impact is estimated severity and urgency on a 1–10 scale—not expected return. It combines event
 severity, entity relevance, tone intensity, model confidence, cross-source corroboration, novelty,
-and source quality. The dashboard reconstructs the weighted score. On 20 synthetic rubric examples,
-the baseline has MAE 1.15 and Pearson correlation 0.8521; those are contract-evidence numbers, not
-market-validation claims.
+and source quality. The dashboard reconstructs the weighted score. On 100 balanced synthetic rubric
+examples, the baseline has MAE 1.29 and Pearson correlation 0.8097; those are contract-evidence
+numbers, not market-validation claims.
 
 ## Why does a signal trigger stress testing?
 
@@ -73,9 +73,18 @@ scaled workers when measured throughput requires them.
 
 ## How is “real-time” supported?
 
-Fetched records are processed immediately in the internal pipeline, and live adapters support bounded
-retries and polling. Provider publishing/indexing latency is outside the application boundary. Replay
-is the formal evidence path so network availability cannot invalidate the demo.
+Fetched records are processed immediately in the internal pipeline. The dashboard and
+`/api/v1/ingestion/live` can request one bounded batch from GDELT and Bluesky, while the CLI supports
+continuous polling with bounded retries. Provider throttling and publishing/indexing latency are
+outside the application boundary and are reported per source. Replay remains the formal evidence
+path so network availability cannot invalidate the demo.
+
+## Can a judge test their own headline without breaking the demo?
+
+Yes. Narrative Lab calls `/api/v1/analyze/preview`, which runs the same entity, sentiment, event,
+impact, policy, and stress logic entirely in memory. The response is machine-readable, but documents,
+signals, and stress runs are not persisted, so repeated experiments cannot contaminate the seeded
+metrics or trigger duplicate conflicts.
 
 ## What are the most important limitations?
 

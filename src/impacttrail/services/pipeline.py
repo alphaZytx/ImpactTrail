@@ -101,6 +101,14 @@ class RiskPipeline:
         return summary
 
     def process_raw(self, raw: RawDocument) -> dict[str, Any]:
+        """Analyze and persist one document, preserving ingestion idempotency."""
+        return self._process_raw(raw, persist=True)
+
+    def preview_raw(self, raw: RawDocument) -> dict[str, Any]:
+        """Analyze one document without changing the repository or demo state."""
+        return self._process_raw(raw, persist=False)
+
+    def _process_raw(self, raw: RawDocument, *, persist: bool) -> dict[str, Any]:
         document = normalize_document(raw, max_length=self.settings.max_text_length)
         sentiment = self.sentiment_analyzer.analyze(document.text)
         event = self.event_classifier.classify(document.text)
@@ -113,16 +121,23 @@ class RiskPipeline:
             )
             entities = [fallback]
 
-        if not self.repository.save_document(document):
+        if persist and not self.repository.save_document(document):
             return {"duplicate": True, "signals": [], "stress_runs": []}
 
         signals: list[RiskSignal] = []
         stress_runs: list[Any] = []
         for entity in entities:
-            cluster_id = self._event_cluster_id(document, entity, event)
-            corroborating_sources = len(
-                self.repository.cluster_sources(str(cluster_id)) | {document.source}
-            )
+            if persist:
+                cluster_id = self._event_cluster_id(document, entity, event)
+                corroborating_sources = len(
+                    self.repository.cluster_sources(str(cluster_id)) | {document.source}
+                )
+            else:
+                cluster_key = (
+                    f"preview:{entity.entity_id}:{event.label.value}:{document.document_id}"
+                )
+                cluster_id = uuid5(NAMESPACE_URL, cluster_key)
+                corroborating_sources = 1
             impact = self.impact_scorer.score(
                 document,
                 entity,
@@ -181,14 +196,19 @@ class RiskPipeline:
                     "is_replay": document.is_replay,
                     "language": document.language,
                     "corroborating_sources": corroborating_sources,
+                    "preview": not persist,
                 },
             )
-            if self.repository.save_signal(signal):
+            if not persist or self.repository.save_signal(signal):
                 signals.append(signal)
                 stress_run = self.stress_service.run(signal)
-                if stress_run and self.repository.save_stress_run(
-                    stress_run, self.stress_service.portfolio_version
-                ):
+                stress_saved = not persist or (
+                    stress_run is not None
+                    and self.repository.save_stress_run(
+                        stress_run, self.stress_service.portfolio_version
+                    )
+                )
+                if stress_run and stress_saved:
                     stress_runs.append(stress_run)
         return {"duplicate": False, "signals": signals, "stress_runs": stress_runs}
 

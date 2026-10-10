@@ -206,9 +206,10 @@ priority_stress_runs = sorted(
     reverse=True,
 )
 
-overview_tab, trace_tab, signal_tab, stress_tab, portfolio_tab, quality_tab = st.tabs(
+overview_tab, lab_tab, trace_tab, signal_tab, stress_tab, portfolio_tab, quality_tab = st.tabs(
     [
         "Overview",
+        "Narrative lab",
         "Decision trace",
         "Signal explorer",
         "Stress lab",
@@ -281,6 +282,182 @@ with overview_tab:
         "not a predicted return. Confidence gates control automatic portfolio actions.</div>",
         unsafe_allow_html=True,
     )
+
+with lab_tab:
+    st.subheader("Narrative lab")
+    st.caption(
+        "Paste a headline or short report to preview the complete AI/NLP signal and portfolio "
+        "decision without changing the deterministic demo state."
+    )
+    with st.form("narrative_preview_form"):
+        preview_text = st.text_area(
+            "Narrative",
+            value=(
+                "Nova Bank downgraded after a default and missed payment amid a severe "
+                "liquidity crisis"
+            ),
+            height=110,
+            max_chars=8000,
+        )
+        preview_submitted = st.form_submit_button(
+            "Analyze narrative", type="primary", width="stretch"
+        )
+    if preview_submitted:
+        try:
+            st.session_state["analysis_preview"] = api_post(
+                api_url, "/api/v1/analyze/preview", {"text": preview_text}
+            )
+        except Exception as exc:
+            st.error(f"Preview analysis failed: {exc}")
+
+    preview = st.session_state.get("analysis_preview")
+    if preview and preview.get("signals"):
+        preview_signals = preview["signals"]
+        selected_preview_index = st.selectbox(
+            "Previewed entity",
+            options=range(len(preview_signals)),
+            format_func=lambda index: signal_name(preview_signals[index]),
+        )
+        preview_signal = preview_signals[selected_preview_index]
+        preview_run = next(
+            (
+                run
+                for run in preview.get("stress_runs", [])
+                if run["signal_id"] == preview_signal["signal_id"]
+            ),
+            None,
+        )
+        preview_columns = st.columns(4)
+        preview_columns[0].metric("Entity", preview_signal["entity"]["name"])
+        preview_columns[0].caption(
+            f"{preview_signal['entity']['match_method']} · "
+            f"{preview_signal['entity']['match_confidence']:.0%} match"
+        )
+        preview_columns[1].metric("Event", label(preview_signal["event"]["label"]))
+        preview_columns[1].caption(
+            f"{preview_signal['event']['confidence']:.0%} classification confidence"
+        )
+        preview_columns[2].metric(
+            "Sentiment",
+            f"{preview_signal['sentiment']['score']:+.2f}",
+            preview_signal["sentiment"]["label"],
+        )
+        preview_columns[3].metric("Impact", f"{preview_signal['impact']['score']:.1f}/10")
+        preview_columns[3].caption(
+            f"{preview_signal['impact']['confidence']:.0%} impact confidence"
+        )
+
+        if preview_run:
+            st.success(
+                "Policy result: stress eligible. The scenario below is calculated in memory and "
+                "was not added to the demo database."
+            )
+        elif preview_signal["actionable"]:
+            st.info(
+                "Policy result: confidence-qualified, but held by the impact threshold or "
+                "scenario-compatibility gate."
+            )
+        else:
+            st.info("Policy result: monitor only; at least one confidence or entity gate held.")
+
+        preview_left, preview_right = st.columns([1, 1.15])
+        with preview_left:
+            st.markdown("**Evidence and explanation**")
+            st.write(f"“{preview_signal['explanation']['evidence_excerpt']}”")
+            st.caption("Reason codes: " + ", ".join(preview_signal["explanation"]["reason_codes"]))
+            if preview_signal["explanation"]["warnings"]:
+                st.warning(" ".join(preview_signal["explanation"]["warnings"]))
+            with st.expander("Machine-readable preview JSON"):
+                preview_json: dict[str, Any] = {
+                    "persisted": preview["persisted"],
+                    "signal": preview_signal,
+                }
+                if preview_run:
+                    preview_json["stress_summary"] = {
+                        key: preview_run[key]
+                        for key in (
+                            "stress_run_id",
+                            "scenario_name",
+                            "trigger_impact",
+                            "pre_stress_value",
+                            "post_stress_value",
+                            "pnl",
+                            "pnl_percent",
+                            "reconciliation_error",
+                        )
+                    }
+                st.json(preview_json)
+        with preview_right:
+            component_frame = pd.DataFrame(
+                [
+                    {
+                        "factor": label(name),
+                        "strength": strength,
+                        "weighted_points": 9 * strength * IMPACT_WEIGHTS.get(name, 0),
+                    }
+                    for name, strength in preview_signal["impact"]["components"].items()
+                ]
+            ).sort_values("weighted_points")
+            component_figure = px.bar(
+                component_frame,
+                x="weighted_points",
+                y="factor",
+                orientation="h",
+                title="Why this impact score?",
+                color_discrete_sequence=["#16a6a1"],
+            )
+            component_figure.update_layout(
+                height=320, margin=dict(l=0, r=20, t=45, b=0), showlegend=False
+            )
+            st.plotly_chart(component_figure, width="stretch")
+
+        if preview_run:
+            st.markdown(f"**Preview scenario: {preview_run['scenario_name']}**")
+            run_columns = st.columns(4)
+            run_columns[0].metric("Pre-stress value", money(preview_run["pre_stress_value"]))
+            run_columns[1].metric("Post-stress value", money(preview_run["post_stress_value"]))
+            run_columns[2].metric(
+                "Scenario P&L", money(preview_run["pnl"]), f"{preview_run['pnl_percent']:.2%}"
+            )
+            run_columns[3].metric(
+                "Reconciliation", f"${abs(preview_run['reconciliation_error']):,.2f}"
+            )
+
+    with st.expander("Optional live public-source ingestion"):
+        st.caption(
+            "Fetch one bounded batch from GDELT news and/or Bluesky public posts. External "
+            "availability is not required for the deterministic judging path."
+        )
+        with st.form("live_ingestion_form"):
+            live_query = st.text_input("Search query", "financial markets")
+            live_sources = st.multiselect(
+                "Sources", options=["gdelt", "bluesky"], default=["gdelt", "bluesky"]
+            )
+            live_submitted = st.form_submit_button("Fetch live batch", width="stretch")
+        if live_submitted:
+            if not live_sources:
+                st.warning("Select at least one public source.")
+            else:
+                try:
+                    with st.spinner("Fetching and analyzing public records..."):
+                        st.session_state["live_ingestion_summary"] = api_post(
+                            api_url,
+                            "/api/v1/ingestion/live",
+                            {"query": live_query, "sources": live_sources},
+                        )
+                except Exception as exc:
+                    st.error(f"Live ingestion failed: {exc}")
+        live_summary = st.session_state.get("live_ingestion_summary")
+        if live_summary:
+            source_frame = pd.DataFrame.from_dict(live_summary["sources"], orient="index")
+            source_frame.index.name = "source"
+            st.dataframe(source_frame.reset_index(), width="stretch", hide_index=True)
+            total = live_summary["totals"]
+            st.caption(
+                f"Query “{live_summary['query']}” · {total['fetched']} fetched · "
+                f"{total['signals']} signals · {total['stress_runs']} stress runs · "
+                f"{total['failed']} failures"
+            )
 
 with trace_tab:
     st.subheader("Decision trace")

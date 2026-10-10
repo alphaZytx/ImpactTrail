@@ -62,8 +62,8 @@ def test_evaluate_reports_impact_metrics_and_protocol() -> None:
 
     assert isinstance(impact, dict)
     assert "not measure production generalization" in result["evaluation_notice"]
-    assert impact["samples"] == 20
-    assert impact["mae"] == pytest.approx(1.15)
+    assert impact["samples"] == 100
+    assert impact["mae"] == pytest.approx(1.286)
     assert -1.0 <= impact["pearson_correlation"] <= 1.0
     assert set(impact["per_event_label_mae"]) == {
         "climate_natural_hazard",

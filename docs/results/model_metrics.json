@@ -1,50 +1,50 @@
 {
-  "evaluation_notice": "Metrics use compact synthetic gold sets designed for contract verification; they do not measure production generalization, calibration, or realized market impact.",
+  "evaluation_notice": "Metrics use balanced synthetic challenge sets designed for contract verification; they do not measure production generalization, calibration, or realized market impact.",
   "sentiment": {
     "backend": "financial_lexicon_v1",
-    "samples": 15,
+    "samples": 90,
     "macro_f1": 1.0,
     "accuracy": 1.0,
     "support": {
-      "positive": 5,
-      "neutral": 5,
-      "negative": 5
+      "positive": 30,
+      "neutral": 30,
+      "negative": 30
     }
   },
   "event": {
     "backend": "taxonomy_rules_v1",
-    "samples": 20,
+    "samples": 100,
     "macro_f1": 1.0,
     "accuracy": 1.0,
     "support": {
-      "geopolitical": 2,
-      "macroeconomic": 2,
-      "credit_event": 2,
-      "merger_acquisition": 2,
-      "product_launch": 2,
-      "regulatory_legal": 2,
-      "operational_cyber": 2,
-      "earnings_guidance": 2,
-      "climate_natural_hazard": 2,
-      "other": 2
+      "geopolitical": 10,
+      "macroeconomic": 10,
+      "credit_event": 10,
+      "merger_acquisition": 10,
+      "product_launch": 10,
+      "regulatory_legal": 10,
+      "operational_cyber": 10,
+      "earnings_guidance": 10,
+      "climate_natural_hazard": 10,
+      "other": 10
     }
   },
   "impact": {
     "backend": "explainable_seven_factor_v1",
-    "samples": 20,
-    "mae": 1.15,
-    "pearson_correlation": 0.8521,
+    "samples": 100,
+    "mae": 1.286,
+    "pearson_correlation": 0.8097,
     "per_event_label_mae": {
-      "climate_natural_hazard": 0.45,
-      "credit_event": 0.9,
-      "earnings_guidance": 1.4,
-      "geopolitical": 0.3,
-      "macroeconomic": 0.25,
-      "merger_acquisition": 1.45,
-      "operational_cyber": 0.5,
-      "other": 4.0,
-      "product_launch": 1.65,
-      "regulatory_legal": 0.6
+      "climate_natural_hazard": 0.71,
+      "credit_event": 0.79,
+      "earnings_guidance": 1.88,
+      "geopolitical": 0.59,
+      "macroeconomic": 0.42,
+      "merger_acquisition": 1.28,
+      "operational_cyber": 0.79,
+      "other": 4.1,
+      "product_launch": 1.79,
+      "regulatory_legal": 0.51
     },
     "assumptions": {
       "document_shape": "synthetic GDELT-shaped English news record",

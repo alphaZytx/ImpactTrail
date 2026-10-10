@@ -169,8 +169,8 @@ def evaluate() -> dict[str, object]:
 
     return {
         "evaluation_notice": (
-            "Metrics use compact synthetic gold sets designed for contract verification; they do "
-            "not measure production generalization, calibration, or realized market impact."
+            "Metrics use balanced synthetic challenge sets designed for contract verification; "
+            "they do not measure production generalization, calibration, or realized market impact."
         ),
         "sentiment": {
             "backend": sentiment.backend,

@@ -25,13 +25,20 @@ explainable portfolio stress result.”
 Show the architecture slide: GDELT-shaped news and Bluesky-shaped social input use one pipeline;
 replay makes it reliable; API/dashboard consume the same stored signal contract.
 
-### 0:50–1:20 — Replay proof
+### 0:50–1:15 — Replay proof
 
 Press **Reset & run demo replay**. The action clears only local runtime records and rebuilds the same
 fixture every time. Point to all six counters: 9 fetched, 8 processed, 1 duplicate, 9 signals, 4
 stress runs, and 0 failures.
 
-### 1:20–2:35 — One auditable decision trace
+### 1:15–1:55 — Live narrative proof
+
+Open **Narrative lab** and analyze the prefilled Nova Bank narrative. Show that the engine resolves
+the issuer, emits sentiment/event/impact with confidence and evidence, explains the weighted score,
+and calculates an in-memory credit stress. Emphasize that preview mode does not alter the seeded
+database, so jury experimentation cannot break the deterministic walkthrough.
+
+### 1:55–2:55 — One auditable decision trace
 
 Open **Decision trace**; Nova Bank is already selected because signals are prioritized by impact.
 Follow the numbered chain:
@@ -44,21 +51,21 @@ Follow the numbered chain:
 
 Say: “A label does not cause action by itself; all four policy gates must pass.”
 
-### 2:35–3:40 — Portfolio consequence
+### 2:55–3:40 — Portfolio consequence
 
 Stay in the trace for the linked credit scenario: `-$7.39M`, `-1.80%`, the top sector driver, and
 `$0.00` reconciliation error. Then open **Stress lab** to show formatted shock assumptions,
 pre/post value, asset-class and sector loss, and the value bridge. Briefly explain loan expected loss,
 bond duration/spread, and derivative delta/DV01 methods.
 
-### 3:40–4:20 — Safety and validation
+### 3:40–4:25 — Safety and validation
 
 Open **Signal explorer** and point to Orion Pharma's honest `other` result. Explain that an unknown
 issuer remains unresolved and cannot become a market-wide stress. Open **Validation & controls** and
-state the limitation before the metrics: compact synthetic sets verify deterministic contracts, not
+state the limitation before the metrics: balanced synthetic sets verify deterministic contracts, not
 production accuracy. Show event/sentiment evidence, impact MAE/correlation, hashes, and readiness.
 
-### 4:20–4:50 — Impact and limitations
+### 4:25–4:50 — Impact and limitations
 
 “The value is not just a sentiment label. It is the traceable path from narrative to affected entity,
 severity, policy decision, and portfolio driver—with the evidence and assumptions attached. This is
@@ -74,4 +81,6 @@ Stop rather than adding an unplanned feature tour.
 - API unavailable: show `make doctor`, then restart `make api`.
 - Empty dashboard: press **Reset & run demo replay** or run `make demo`, then refresh.
 - Network unavailable: replay needs no provider access.
+- Public source throttled: show the per-source failure summary, then continue with replay or the
+  non-persistent Narrative Lab.
 - UI issue: use `http://127.0.0.1:8000/docs` to demonstrate the same workflow.

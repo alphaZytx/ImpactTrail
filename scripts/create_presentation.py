@@ -448,7 +448,7 @@ def slide_6(pdf: canvas.Canvas, metrics: dict[str, Any], evaluation: dict[str, A
         pdf,
         "05 - Measured results",
         "Reproducible evidence, with the limitations attached",
-        "Replay proves the workflow; compact synthetic sets verify contracts, not production "
+        "Replay proves the workflow; balanced synthetic sets verify contracts, not production "
         "generalization.",
     )
     preview = ImageReader(str(DOCS / "dashboard_preview.png"))

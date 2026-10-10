@@ -17,8 +17,8 @@ ImpactTrail is a Python modular monolith built for an auditable, offline-safe ju
    its event has a direction-compatible configured scenario.
 6. The stress engine values synthetic loans, bonds, and derivatives and reconciles position results
    to portfolio totals.
-7. Streamlit presents evidence, decision gates, portfolio loss drivers, assumptions, and validation
-   controls.
+7. Streamlit presents evidence, decision gates, portfolio loss drivers, assumptions, validation
+   controls, and a non-persistent Narrative Lab for safe jury experimentation.
 
 The default release path is deterministic and network-independent after dependency installation.
 Live adapters are optional and use the same processing path.
@@ -48,9 +48,9 @@ a standardized adverse stress, not a prediction that its shocks will occur.
 | Sentiment | Bounded finance lexicon by default; pinned optional FinBERT backend | `nlp/sentiment.py`, synthetic-set evaluation |
 | Event classification | Versioned ten-class taxonomy with honest `other` outcome | `nlp/event_classifier.py`, macro-F1 evaluation |
 | Impact | Seven-factor, weighted 1–10 severity model | `nlp/impact.py`, synthetic-set MAE/correlation evaluation |
-| Machine-readable output | Pydantic schema, filtered API, OpenAPI, per-signal JSON download | `domain/signals.py`, `api/app.py`, API tests |
+| Machine-readable output | Pydantic schema, filtered API, OpenAPI, preview and live-ingestion endpoints | `domain/signals.py`, `api/app.py`, API tests |
 | Module B | Five scenario families and asset-specific valuation for loans, bonds, derivatives | `stress_testing/`, reconciliation and boundary tests |
-| Analyst experience | Priority view, decision trace, signal explorer, stress lab, portfolio and controls | `dashboard/app.py` |
+| Analyst experience | Narrative Lab, priority view, decision trace, stress lab, portfolio and controls | `dashboard/app.py` |
 | Reproducibility | Fixed replay, fixed-seed portfolio, SHA-256 data manifest, CI and release gate | `data/`, `scripts/`, `.github/workflows/ci.yml` |
 
 ## Requirement traceability
@@ -61,7 +61,7 @@ a standardized adverse stress, not a prediction that its shocks will occur.
 | Emit sentiment `[-1, 1]` | Complete | `SentimentResult` validation and NLP tests |
 | Emit required event categories | Complete | Versioned taxonomy includes all five required examples plus five risk-relevant classes |
 | Emit impact `[1, 10]` | Complete | `ImpactResult` validation, component breakdown, and evaluation report |
-| Provide downstream-consumable output | Complete | `/api/v1/signals`, OpenAPI, and downloadable JSON |
+| Provide downstream-consumable output | Complete | `/api/v1/signals`, `/api/v1/analyze/preview`, OpenAPI, and downloadable JSON |
 | Use event and impact in Module B | Complete | Automatic strict-threshold scenario trigger in the end-to-end test |
 | Include loans, bonds, derivatives | Complete | Fixed 72-position portfolio and asset-class valuation tests |
 | Show before/after portfolio value | Complete | Stress API and dashboard metrics, charts, position reconciliation |
@@ -79,7 +79,7 @@ a standardized adverse stress, not a prediction that its shocks will occur.
 - SQLite is the implemented signal store. JSON is exported per signal through the dashboard/API;
   there is no batch JSONL/CSV signal exporter in v1.
 - Live-source availability, provider indexing latency, and model downloads are outside the offline
-  demo guarantee.
+  demo guarantee. The live endpoint reports source-level failures and never replaces replay evidence.
 - Valuations are transparent approximations and are not regulatory capital, CCAR, ICAAP, VaR, or
   investment advice.
 

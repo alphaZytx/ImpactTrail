@@ -8,8 +8,10 @@ client, customer, or proprietary S&P Global/Crisil information is used.
 - `demo/mixed_source_events.jsonl`: synthetic records shaped like GDELT news and Bluesky posts.
   They are used by deterministic replay and are not represented as content collected from those
   services.
-- `evaluation/sentiment_gold.csv`: synthetic finance-language sentiment evaluation set.
-- `evaluation/events_gold.csv`: synthetic, human-specified event/impact evaluation set.
+- `evaluation/sentiment_gold.csv`: 90-example balanced finance-language sentiment challenge set
+  with positive, neutral, and negative slices.
+- `evaluation/events_gold.csv`: 100-example balanced event/impact challenge set covering all ten
+  taxonomy labels and varied single-cue, multi-cue, severity, direction, and competing-cue cases.
 - `reference/companies.csv`: fictional issuer/ticker registry for deterministic entity linking.
 - `synthetic/wholesale_portfolio.csv`: fixed-seed fictional loans, bonds, and derivatives.
 - `manifests/data_manifest.csv`: file-level provenance and SHA-256 hashes.
@@ -26,5 +28,6 @@ client, customer, or proprietary S&P Global/Crisil information is used.
 
 ## Reproduction
 
-Run `make seed` to regenerate the portfolio with seed `20261008` and validate every file.
+Run `make seed` to regenerate the evaluation sets and portfolio with fixed inputs and validate every
+file.
 Run `make evaluate` to reproduce model metrics.

@@ -1,22 +1,101 @@
-text,label,impact_score
-"Government imposes new sanctions and an export ban after border conflict",geopolitical,8.8
-"Trade restrictions escalate as a regional war disrupts supply routes",geopolitical,9.1
-"Central bank announces a rate hike as inflation accelerates",macroeconomic,7.8
-"GDP contracts and unemployment rises amid recession fears",macroeconomic,8.0
-"Nova Bank misses payment and enters restructuring talks",credit_event,9.2
-"Issuer default follows a severe liquidity crisis and downgrade",credit_event,9.5
-"Atlas Motors announces acquisition of Cedar Logistics",merger_acquisition,5.6
-"Board approves a proposed merger and takeover offer",merger_acquisition,6.0
-"Aeon Technologies launches a new approved cloud platform",product_launch,4.5
-"Orion Pharma delays a product launch after a recall",product_launch,6.2
-"Regulator opens an antitrust investigation and threatens a fine",regulatory_legal,7.4
-"Court imposes a large penalty after an enforcement action",regulatory_legal,7.8
-"Helios Energy suffers a ransomware breach and plant shutdown",operational_cyber,8.6
-"Network outage causes a major operational disruption",operational_cyber,7.5
-"Company raises guidance after record quarterly earnings",earnings_guidance,5.1
-"Profit warning follows weak revenue and lower forecast",earnings_guidance,6.8
-"A severe flood closes a regional manufacturing facility",climate_natural_hazard,7.6
-"Wildfire and drought disrupt mining operations",climate_natural_hazard,7.9
-"Company schedules a community meeting next month",other,2.0
-"Executive speaks at a routine industry conference",other,2.2
-
+example_id,text,label,impact_score,challenge_type
+event-001,Government imposes sanctions after a border conflict,geopolitical,8.4,single_cue
+event-002,Export ban follows escalating regional conflict,geopolitical,8.2,single_cue
+event-003,Trade restriction disrupts critical supply routes,geopolitical,7.6,paraphrase
+event-004,War closes a major cross-border transport corridor,geopolitical,9.3,high_severity
+event-005,Naval blockade delays energy shipments,geopolitical,8.7,paraphrase
+event-006,New sanctions restrict access to international funding,geopolitical,8.5,finance_context
+event-007,Border conflict forces factories to suspend deliveries,geopolitical,8.8,operational_context
+event-008,Invasion triggers an export ban on strategic materials,geopolitical,9.5,multi_cue
+event-009,Trade restrictions intensify after diplomatic conflict,geopolitical,8.0,multi_cue
+event-010,Regional war raises commodity and shipping risk,geopolitical,9.1,high_severity
+event-011,Central bank announces a rate hike as inflation accelerates,macroeconomic,7.8,multi_cue
+event-012,GDP contracts as recession risk increases,macroeconomic,8.0,multi_cue
+event-013,Unemployment rises during a broad economic slowdown,macroeconomic,6.9,single_cue
+event-014,Monetary policy remains restrictive amid persistent inflation,macroeconomic,7.4,paraphrase
+event-015,Central bank signals another rate hike,macroeconomic,7.2,single_cue
+event-016,Recession fears deepen after weak GDP data,macroeconomic,8.1,multi_cue
+event-017,Rate cut is announced as economic growth weakens,macroeconomic,6.8,direction_case
+event-018,Inflation reaches a new high and unemployment increases,macroeconomic,7.7,multi_cue
+event-019,Monetary policy tightening pressures credit conditions,macroeconomic,7.3,finance_context
+event-020,Central bank rate hike follows an inflation surprise,macroeconomic,7.9,multi_cue
+event-021,Nova Bank misses payment and enters restructuring talks,credit_event,9.2,multi_cue
+event-022,Aeon Technologies defaults after a severe liquidity crisis,credit_event,9.6,high_severity
+event-023,Orion Pharma is downgraded following a covenant breach,credit_event,8.5,multi_cue
+event-024,Cedar Logistics files for bankruptcy after missed payment,credit_event,9.7,high_severity
+event-025,Atlas Motors faces insolvency as funding expires,credit_event,9.3,single_cue
+event-026,Vertex Telecom begins debt restructuring after a downgrade,credit_event,8.8,multi_cue
+event-027,Meridian Retail warns of a liquidity crisis,credit_event,8.7,single_cue
+event-028,Lumen Aerospace breaches a covenant and misses payment,credit_event,9.0,multi_cue
+event-029,Terra Mining default follows an abrupt funding withdrawal,credit_event,9.4,high_severity
+event-030,Helios Energy receives a downgrade but remains current on payments,credit_event,7.1,low_severity
+event-031,Nova Bank announces an acquisition of a regional competitor,merger_acquisition,5.7,single_cue
+event-032,Board approves a proposed merger,merger_acquisition,5.6,single_cue
+event-033,Orion Pharma receives a takeover offer,merger_acquisition,6.0,single_cue
+event-034,Cedar Logistics agrees to acquire a technology supplier,merger_acquisition,5.8,single_cue
+event-035,Shareholders approve a strategic buyout,merger_acquisition,6.1,single_cue
+event-036,Vertex Telecom begins a divestiture of non-core assets,merger_acquisition,5.2,single_cue
+event-037,A tender offer is launched for Meridian Retail,merger_acquisition,6.3,single_cue
+event-038,Regulators review the proposed merger,merger_acquisition,6.6,competing_cue
+event-039,Terra Mining completes an acquisition after board approval,merger_acquisition,5.4,single_cue
+event-040,A cross-border takeover of Helios Energy is announced,merger_acquisition,6.4,paraphrase
+event-041,Nova Bank launches an approved digital platform,product_launch,4.5,positive_case
+event-042,Aeon Technologies schedules a product release,product_launch,4.1,single_cue
+event-043,Orion Pharma unveils a new analytics service,product_launch,4.3,single_cue
+event-044,Cedar Logistics begins a nationwide product rollout,product_launch,4.8,single_cue
+event-045,Atlas Motors receives approval for a new medicine,product_launch,5.1,positive_case
+event-046,Vertex Telecom delays a product launch,product_launch,5.9,negative_case
+event-047,Meridian Retail announces a product delay after testing,product_launch,6.0,negative_case
+event-048,Lumen Aerospace recalls a recently launched device,product_launch,6.8,negative_case
+event-049,Terra Mining launches a service after regulatory approval,product_launch,4.9,competing_cue
+event-050,Helios Energy expands the rollout of its approved product,product_launch,4.6,positive_case
+event-051,Regulator opens an antitrust investigation into Nova Bank,regulatory_legal,7.5,multi_cue
+event-052,Court imposes a large penalty on Aeon Technologies,regulatory_legal,7.6,single_cue
+event-053,Orion Pharma faces an enforcement action,regulatory_legal,7.2,single_cue
+event-054,A lawsuit alleges misconduct by Cedar Logistics,regulatory_legal,6.8,single_cue
+event-055,Regulation requires Atlas Motors to change its controls,regulatory_legal,6.4,single_cue
+event-056,Vertex Telecom receives a fine after an investigation,regulatory_legal,7.4,multi_cue
+event-057,Competition regulator begins an antitrust review,regulatory_legal,7.0,multi_cue
+event-058,Court penalty follows a lengthy lawsuit,regulatory_legal,7.3,multi_cue
+event-059,Terra Mining settles an enforcement investigation,regulatory_legal,6.9,multi_cue
+event-060,New regulation restricts a key product line,regulatory_legal,7.1,single_cue
+event-061,Nova Bank suffers a ransomware breach,operational_cyber,8.5,multi_cue
+event-062,Network outage causes a major operational disruption,operational_cyber,7.6,multi_cue
+event-063,Cyberattack shuts down Orion Pharma systems,operational_cyber,8.7,multi_cue
+event-064,Cedar Logistics reports a data breach,operational_cyber,7.4,single_cue
+event-065,Plant shutdown interrupts production,operational_cyber,7.3,single_cue
+event-066,Payment outage affects Vertex Telecom customers,operational_cyber,7.1,single_cue
+event-067,Internal fraud causes an operational disruption,operational_cyber,7.7,multi_cue
+event-068,Ransomware attack leads to a week-long outage,operational_cyber,8.9,multi_cue
+event-069,Cyber attack disrupts a critical service,operational_cyber,8.2,multi_cue
+event-070,Helios Energy restores systems after a brief outage,operational_cyber,6.2,low_severity
+event-071,Nova Bank raises guidance after record quarterly earnings,earnings_guidance,5.1,positive_case
+event-072,Aeon Technologies issues a profit warning,earnings_guidance,6.8,negative_case
+event-073,Revenue falls below the company forecast,earnings_guidance,6.0,negative_case
+event-074,Cedar Logistics reports quarterly results in line with expectations,earnings_guidance,4.2,neutral_case
+event-075,Margin improves as revenue grows,earnings_guidance,4.8,positive_case
+event-076,Vertex Telecom lowers guidance after weak earnings,earnings_guidance,6.4,negative_case
+event-077,Forecast is unchanged after quarterly results,earnings_guidance,4.0,neutral_case
+event-078,Lumen Aerospace reports record revenue and profit,earnings_guidance,4.9,positive_case
+event-079,Earnings miss prompts a lower forecast,earnings_guidance,6.3,negative_case
+event-080,Helios Energy expects stable margin in the next quarter,earnings_guidance,4.1,neutral_case
+event-081,Severe flood closes a regional manufacturing facility,climate_natural_hazard,7.7,single_cue
+event-082,Wildfire disrupts mining operations,climate_natural_hazard,7.5,single_cue
+event-083,Hurricane damages a coastal logistics hub,climate_natural_hazard,8.3,single_cue
+event-084,Earthquake forces factories to stop production,climate_natural_hazard,8.8,single_cue
+event-085,Drought reduces output across the region,climate_natural_hazard,7.2,single_cue
+event-086,Cyclone interrupts shipping and power supply,climate_natural_hazard,8.1,single_cue
+event-087,Natural disaster damages critical infrastructure,climate_natural_hazard,8.5,single_cue
+event-088,Flood and wildfire affect separate operating sites,climate_natural_hazard,8.4,multi_cue
+event-089,Drought causes a temporary production slowdown,climate_natural_hazard,6.8,low_severity
+event-090,Hurricane warning prompts precautionary closures,climate_natural_hazard,7.0,low_severity
+event-091,Nova Bank schedules a community meeting,other,2.0,routine
+event-092,Executive speaks at an industry conference,other,2.2,routine
+event-093,Orion Pharma publishes its annual calendar,other,1.9,routine
+event-094,Board appoints a non-executive director,other,2.4,routine
+event-095,Atlas Motors opens a routine investor briefing,other,2.1,routine
+event-096,Company updates its corporate website,other,1.6,routine
+event-097,Meridian Retail issues a standard governance notice,other,2.0,routine
+event-098,Management attends a scheduled trade event,other,2.3,routine
+event-099,Terra Mining confirms its next annual meeting date,other,1.8,routine
+event-100,Company publishes a general information bulletin,other,1.7,routine

@@ -22,7 +22,8 @@ path. Signals carry confidence, evidence, provenance, reason codes, model versio
 keys. When a confidence-qualified signal has a direction-compatible supported scenario and impact
 strictly greater than `7`, ImpactTrail automatically runs a transparent stress against a synthetic
 portfolio of loans, bonds, and derivatives. The dashboard connects the original narrative to
-portfolio loss drivers without manual data transfer.
+portfolio loss drivers without manual data transfer. A non-persistent Narrative Lab lets judges test
+new text and inspect the complete signal-to-stress result without changing the seeded demo state.
 
 ## 2. Architecture & Tech Stack
 
@@ -37,6 +38,7 @@ boundaries.
 
 - Python 3.11, FastAPI, Pydantic, SQLAlchemy, SQLite
 - HTTPX adapters for GDELT and Bluesky; deterministic JSONL replay
+- Guarded live-ingestion API and non-persistent narrative preview API
 - Finance lexicon offline model and optional `ProsusAI/finbert` backend
 - Versioned rule-based event taxonomy with explicit abstention
 - Explainable seven-factor impact score and confidence gates
@@ -56,7 +58,7 @@ Every committed runtime dataset is synthetic, compact, redistributable, and docu
 - 9 mixed-source replay records, including an exact duplicate to verify idempotency
 - 10 fictional companies with aliases and cashtags
 - 72 fictional wholesale positions: 32 loans, 24 bonds, and 16 derivatives
-- 15 finance-sentiment and 20 event/impact evaluation examples
+- 90 balanced finance-sentiment and 100 balanced event/impact challenge examples
 - SHA-256 provenance manifest at `data/manifests/data_manifest.csv`
 
 Live source content is optional and is written only to Git-ignored runtime storage. Synthetic records
@@ -130,17 +132,19 @@ Live adapters use bounded exponential backoff for rate limits and transient prov
 operation still requires network availability and provider compliance; replay remains the official
 reproducible evidence path.
 
-## 5. Two-Minute Judge Path
+## 5. Fast Judge Path
 
 1. Open the dashboard and press **Reset & run demo replay**. The sidebar proves `9` fetched, `8`
    unique, `1` duplicate, `9` signals, `4` stress runs, and `0` failures.
-2. Open **Decision trace**. It defaults to Nova Bank: two independent news/social records resolve to
+2. Open **Narrative lab**, analyze the prefilled Nova Bank headline, and show the newly calculated
+   entity, sentiment, event, impact explanation, policy result, and in-memory portfolio stress.
+3. Open **Decision trace**. It defaults to Nova Bank: two independent news/social records resolve to
    one credit-event cluster and pass four visible policy gates.
-3. Follow the linked credit scenario to `-$7.39M` (`-1.80%`) portfolio P&L, the top sector driver,
+4. Follow the linked credit scenario to `-$7.39M` (`-1.80%`) portfolio P&L, the top sector driver,
    and `$0.00` reconciliation error.
-4. Open **Signal explorer** and select Orion Pharma to show honest `other` abstention, or inspect the
+5. Open **Signal explorer** and select Orion Pharma to show honest `other` abstention, or inspect the
    unresolved-issuer safeguard that prevents an unknown company from becoming a market-wide shock.
-5. Open **Validation & controls** for model/data limitations, impact MAE/correlation, lineage, and
+6. Open **Validation & controls** for model/data limitations, impact MAE/correlation, lineage, and
    runtime readiness.
 
 The complete timed narration and fallback path are in [docs/demo_script.md](docs/demo_script.md).
@@ -156,13 +160,13 @@ The committed replay currently produces:
 - Zero replay failures
 - Unknown issuer-specific events remain unresolved and cannot trigger full-portfolio stress
 
-On the compact synthetic gold sets, the transparent offline baselines produce:
+On the balanced synthetic challenge sets, the transparent offline baselines produce:
 
 | Output | Samples | Reproducible evidence |
 |---|---:|---:|
-| Finance sentiment lexicon | 15 | 100.00% macro-F1 |
-| Event taxonomy rules | 20 | 100.00% macro-F1 |
-| Explainable impact score | 20 | MAE `1.15`; Pearson `r = 0.8521` |
+| Finance sentiment lexicon | 90 | 100.00% macro-F1 |
+| Event taxonomy rules | 100 | 100.00% macro-F1 |
+| Explainable impact score | 100 | MAE `1.29`; Pearson `r = 0.8097` |
 
 These compact, vocabulary-constrained synthetic sets verify deterministic behavior on submitted
 examples; they are **not production accuracy, calibration, or realized-market-impact claims**. The
@@ -203,6 +207,22 @@ curl -X POST http://127.0.0.1:8000/api/v1/analyze \
   -d '{"text":"Nova Bank downgraded after default and missed payment"}'
 ```
 
+Preview the complete signal and stress result without writing to the database:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/analyze/preview \
+  -H 'Content-Type: application/json' \
+  -d '{"text":"Nova Bank downgraded after default and missed payment"}'
+```
+
+Fetch one bounded live batch from the public providers:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/ingestion/live \
+  -H 'Content-Type: application/json' \
+  -d '{"query":"financial markets","sources":["gdelt","bluesky"]}'
+```
+
 Query high-impact, confidence-qualified signals:
 
 ```bash
@@ -223,6 +243,8 @@ curl 'http://127.0.0.1:8000/api/v1/signals?min_impact=7&actionable=true'
 - Exact-content duplicate suppression is bounded to 24 hours; provider record IDs remain globally
   idempotent in the demo store.
 - Stress formulas are transparent approximations, not regulatory capital models.
+- Public providers can throttle, reject, or delay requests; the live endpoint reports per-source
+  failures without compromising the offline judging path.
 - The repository must be personalized with candidate identity and the final public video/repository
   links before submission.
 
