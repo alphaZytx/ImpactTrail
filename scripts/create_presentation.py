@@ -198,8 +198,8 @@ def slide_1(pdf: canvas.Canvas, metrics: dict[str, Any]) -> None:
         leading=25,
         color=HexColor("#C8D6E5"),
     )
-    candidate = os.getenv("RISKPULSE_CANDIDATE_NAME", "Alok Chandra")
-    college = os.getenv("RISKPULSE_COLLEGE", "College name to be added before submission")
+    candidate = os.getenv("IMPACTTRAIL_CANDIDATE_NAME", "Alok Chandra")
+    college = os.getenv("IMPACTTRAIL_COLLEGE", "College name to be added before submission")
     pdf.setFont("Helvetica-Bold", 13)
     set_fill(pdf, WHITE)
     pdf.drawString(62, 163, candidate)
@@ -555,7 +555,7 @@ def main() -> None:
     evaluation = load_evaluation()
     pdf = canvas.Canvas(str(CANONICAL), pagesize=PAGE_SIZE, pageCompression=1)
     pdf.setTitle("ImpactTrail - S&P Global & Crisil Campus Hackathon 2026")
-    pdf.setAuthor(os.getenv("RISKPULSE_CANDIDATE_NAME", "Alok Chandra"))
+    pdf.setAuthor(os.getenv("IMPACTTRAIL_CANDIDATE_NAME", "Alok Chandra"))
     pdf.setSubject("AI/NLP financial risk engine and strategic portfolio stress testing")
     slide_1(pdf, metrics)
     slide_2(pdf)

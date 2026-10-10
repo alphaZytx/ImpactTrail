@@ -119,7 +119,7 @@ otherwise selects the tested offline finance lexicon.
 
 ```bash
 make models
-RISKPULSE_MODEL_BACKEND=finbert make demo
+IMPACTTRAIL_MODEL_BACKEND=finbert make demo
 ```
 
 Model downloads are disabled by default during application startup. The five-minute demo never

@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables and safe defaults."""
 
     model_config = SettingsConfigDict(
-        env_prefix="RISKPULSE_", env_file=".env", extra="ignore", case_sensitive=False
+        env_prefix="IMPACTTRAIL_", env_file=".env", extra="ignore", case_sensitive=False
     )
 
     env: Literal["development", "test", "production"] = "development"

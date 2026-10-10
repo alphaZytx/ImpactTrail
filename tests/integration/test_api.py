@@ -14,9 +14,9 @@ from impacttrail.services.factory import get_pipeline, get_repository
 @pytest.fixture(autouse=True)
 def isolated_api_database(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
     """Keep API tests from clearing or reseeding the judge-facing demo database."""
-    monkeypatch.setenv("RISKPULSE_ENV", "test")
-    monkeypatch.setenv("RISKPULSE_MODEL_BACKEND", "lexicon")
-    monkeypatch.setenv("RISKPULSE_DATABASE_URL", f"sqlite:///{tmp_path / 'api-test.db'}")
+    monkeypatch.setenv("IMPACTTRAIL_ENV", "test")
+    monkeypatch.setenv("IMPACTTRAIL_MODEL_BACKEND", "lexicon")
+    monkeypatch.setenv("IMPACTTRAIL_DATABASE_URL", f"sqlite:///{tmp_path / 'api-test.db'}")
     get_pipeline.cache_clear()
     get_repository.cache_clear()
     get_settings.cache_clear()

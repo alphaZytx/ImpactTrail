@@ -78,7 +78,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--interval-seconds",
         type=int,
         default=None,
-        help="Defaults to RISKPULSE_POLL_INTERVAL_SECONDS (300 seconds)",
+        help="Defaults to IMPACTTRAIL_POLL_INTERVAL_SECONDS (300 seconds)",
     )
     watch.add_argument("--iterations", type=int, default=0, help="0 runs until interrupted")
     reset = subparsers.add_parser("reset", help="Clear runtime database records")

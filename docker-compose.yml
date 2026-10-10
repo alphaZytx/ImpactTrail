@@ -2,8 +2,8 @@ services:
   api:
     build: .
     environment:
-      RISKPULSE_DATABASE_URL: sqlite:////app/data/runtime/impacttrail.db
-      RISKPULSE_MODEL_BACKEND: ${RISKPULSE_MODEL_BACKEND:-lexicon}
+      IMPACTTRAIL_DATABASE_URL: sqlite:////app/data/runtime/impacttrail.db
+      IMPACTTRAIL_MODEL_BACKEND: ${IMPACTTRAIL_MODEL_BACKEND:-lexicon}
     ports:
       - "8000:8000"
     volumes:
@@ -18,7 +18,7 @@ services:
     build: .
     command: ["streamlit", "run", "dashboard/app.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
     environment:
-      RISKPULSE_API_URL: http://api:8000
+      IMPACTTRAIL_API_URL: http://api:8000
     ports:
       - "8501:8501"
     depends_on:

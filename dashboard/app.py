@@ -13,7 +13,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_API_URL = os.getenv("RISKPULSE_API_URL", "http://127.0.0.1:8000")
+DEFAULT_API_URL = os.getenv("IMPACTTRAIL_API_URL", "http://127.0.0.1:8000")
 IMPACT_WEIGHTS = {
     "event_severity": 0.30,
     "entity_relevance": 0.15,
