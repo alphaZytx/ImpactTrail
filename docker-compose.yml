@@ -2,12 +2,12 @@ services:
   api:
     build: .
     environment:
-      RISKPULSE_DATABASE_URL: sqlite:////app/data/runtime/riskpulse.db
+      RISKPULSE_DATABASE_URL: sqlite:////app/data/runtime/impacttrail.db
       RISKPULSE_MODEL_BACKEND: ${RISKPULSE_MODEL_BACKEND:-lexicon}
     ports:
       - "8000:8000"
     volumes:
-      - riskpulse-data:/app/data/runtime
+      - impacttrail-data:/app/data/runtime
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
       interval: 10s
@@ -26,5 +26,5 @@ services:
         condition: service_healthy
 
 volumes:
-  riskpulse-data:
+  impacttrail-data:
 

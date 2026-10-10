@@ -5,8 +5,8 @@ from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Any
 
-from riskpulse.domain.documents import RawDocument
-from riskpulse.ingestion.base import AdapterFailure, SourceAdapter
+from impacttrail.domain.documents import RawDocument
+from impacttrail.ingestion.base import AdapterFailure, SourceAdapter
 
 
 class ReplayAdapter(SourceAdapter):

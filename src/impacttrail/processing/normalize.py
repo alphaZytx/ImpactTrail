@@ -5,7 +5,7 @@ import re
 import unicodedata
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-from riskpulse.domain.documents import NormalizedDocument, RawDocument
+from impacttrail.domain.documents import NormalizedDocument, RawDocument
 
 _TRACKING_PARAMS = {"utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"}
 

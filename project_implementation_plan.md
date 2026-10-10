@@ -898,7 +898,7 @@ For a hackathon-scale local build, an in-app metrics summary and structured logs
 │   ├── sources.yaml
 │   └── stress_scenarios.yaml
 ├── src/
-│   └── riskpulse/
+│   └── impacttrail/
 │       ├── __init__.py
 │       ├── cli.py
 │       ├── config.py

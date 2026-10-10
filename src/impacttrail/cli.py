@@ -6,11 +6,11 @@ import json
 import sys
 from pathlib import Path
 
-from riskpulse.config import get_settings
-from riskpulse.ingestion.bluesky import BlueskyAdapter
-from riskpulse.ingestion.gdelt import GdeltAdapter
-from riskpulse.ingestion.replay import ReplayAdapter
-from riskpulse.services.factory import get_pipeline, get_repository
+from impacttrail.config import get_settings
+from impacttrail.ingestion.bluesky import BlueskyAdapter
+from impacttrail.ingestion.gdelt import GdeltAdapter
+from impacttrail.ingestion.replay import ReplayAdapter
+from impacttrail.services.factory import get_pipeline, get_repository
 
 
 def _doctor() -> int:
@@ -65,7 +65,7 @@ async def _watch(query: str, interval_seconds: int, iterations: int) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="riskpulse")
+    parser = argparse.ArgumentParser(prog="impacttrail")
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("doctor", help="Validate local data, configuration, and model readiness")
     replay = subparsers.add_parser("replay", help="Process a deterministic JSONL fixture")

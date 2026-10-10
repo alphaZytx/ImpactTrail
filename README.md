@@ -102,8 +102,8 @@ python3.11 -m venv .venv
 .venv/bin/python scripts/generate_portfolio.py
 .venv/bin/python scripts/update_data_manifest.py
 .venv/bin/python scripts/validate_data.py
-.venv/bin/python -m riskpulse.cli replay --fixture data/demo/mixed_source_events.jsonl
-.venv/bin/uvicorn riskpulse.api.app:create_app --factory --port 8000
+.venv/bin/python -m impacttrail.cli replay --fixture data/demo/mixed_source_events.jsonl
+.venv/bin/uvicorn impacttrail.api.app:create_app --factory --port 8000
 ```
 
 ### Docker Compose
@@ -128,7 +128,7 @@ downloads weights.
 ### Optional live ingestion
 
 ```bash
-.venv/bin/python -m riskpulse.cli live --query 'financial markets'
+.venv/bin/python -m impacttrail.cli live --query 'financial markets'
 # Or continuously poll both providers every five minutes:
 make live
 ```

@@ -4,7 +4,7 @@ import csv
 import hashlib
 from pathlib import Path
 
-from riskpulse.domain.portfolio import PortfolioPosition
+from impacttrail.domain.portfolio import PortfolioPosition
 
 OPTIONAL_FLOATS = {
     "duration_years",

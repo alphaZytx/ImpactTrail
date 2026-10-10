@@ -5,7 +5,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from riskpulse.domain.signals import EntityMatch
+from impacttrail.domain.signals import EntityMatch
 
 
 @dataclass(frozen=True)

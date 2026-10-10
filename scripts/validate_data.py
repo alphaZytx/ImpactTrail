@@ -5,9 +5,9 @@ import hashlib
 import json
 from pathlib import Path
 
-from riskpulse.domain.documents import RawDocument
-from riskpulse.processing.entity_linker import EntityLinker
-from riskpulse.stress_testing.portfolio import load_portfolio
+from impacttrail.domain.documents import RawDocument
+from impacttrail.processing.entity_linker import EntityLinker
+from impacttrail.stress_testing.portfolio import load_portfolio
 
 ROOT = Path(__file__).resolve().parents[1]
 

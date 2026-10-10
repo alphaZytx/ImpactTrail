@@ -6,9 +6,9 @@ from datetime import UTC, datetime, timedelta
 from typing import Any
 from uuid import NAMESPACE_URL, UUID, uuid5
 
-from riskpulse.config import Settings
-from riskpulse.domain.documents import NormalizedDocument, RawDocument
-from riskpulse.domain.signals import (
+from impacttrail.config import Settings
+from impacttrail.domain.documents import NormalizedDocument, RawDocument
+from impacttrail.domain.signals import (
     EntityMatch,
     EventLabel,
     EventResult,
@@ -16,14 +16,14 @@ from riskpulse.domain.signals import (
     RiskSignal,
     SourceReference,
 )
-from riskpulse.ingestion.base import SourceAdapter
-from riskpulse.nlp.event_classifier import RuleEventClassifier
-from riskpulse.nlp.impact import ImpactScorer
-from riskpulse.nlp.sentiment import SentimentAnalyzer, build_sentiment_analyzer
-from riskpulse.processing.entity_linker import EntityLinker
-from riskpulse.processing.normalize import normalize_document
-from riskpulse.storage.repositories import Repository
-from riskpulse.stress_testing.service import StressTestingService
+from impacttrail.ingestion.base import SourceAdapter
+from impacttrail.nlp.event_classifier import RuleEventClassifier
+from impacttrail.nlp.impact import ImpactScorer
+from impacttrail.nlp.sentiment import SentimentAnalyzer, build_sentiment_analyzer
+from impacttrail.processing.entity_linker import EntityLinker
+from impacttrail.processing.normalize import normalize_document
+from impacttrail.storage.repositories import Repository
+from impacttrail.stress_testing.service import StressTestingService
 
 logger = logging.getLogger(__name__)
 

@@ -7,13 +7,13 @@ from pathlib import Path
 
 import pytest
 
-from riskpulse.config import Settings
-from riskpulse.domain.documents import RawDocument, SourceType
-from riskpulse.domain.signals import SentimentResult
-from riskpulse.ingestion.replay import ReplayAdapter
-from riskpulse.nlp.sentiment import LexiconSentimentAnalyzer
-from riskpulse.services.pipeline import RiskPipeline
-from riskpulse.storage.repositories import Repository
+from impacttrail.config import Settings
+from impacttrail.domain.documents import RawDocument, SourceType
+from impacttrail.domain.signals import SentimentResult
+from impacttrail.ingestion.replay import ReplayAdapter
+from impacttrail.nlp.sentiment import LexiconSentimentAnalyzer
+from impacttrail.services.pipeline import RiskPipeline
+from impacttrail.storage.repositories import Repository
 
 
 def test_complete_replay_is_idempotent(

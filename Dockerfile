@@ -17,4 +17,4 @@ COPY scripts ./scripts
 COPY .streamlit ./.streamlit
 
 EXPOSE 8000 8501
-CMD ["uvicorn", "riskpulse.api.app:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "impacttrail.api.app:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]

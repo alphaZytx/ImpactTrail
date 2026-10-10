@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from functools import lru_cache
 
-from riskpulse.config import Settings, get_settings
-from riskpulse.services.pipeline import RiskPipeline
-from riskpulse.storage.repositories import Repository
+from impacttrail.config import Settings, get_settings
+from impacttrail.services.pipeline import RiskPipeline
+from impacttrail.storage.repositories import Repository
 
 
 @lru_cache(maxsize=1)

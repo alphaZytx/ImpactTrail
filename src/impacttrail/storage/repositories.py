@@ -10,10 +10,10 @@ from sqlalchemy import and_, create_engine, delete, func, select
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from riskpulse.domain.documents import NormalizedDocument
-from riskpulse.domain.signals import RiskSignal
-from riskpulse.domain.stress import StressRun
-from riskpulse.storage.models import (
+from impacttrail.domain.documents import NormalizedDocument
+from impacttrail.domain.signals import RiskSignal
+from impacttrail.domain.stress import StressRun
+from impacttrail.storage.models import (
     Base,
     DeadLetterRecord,
     RawDocumentRecord,

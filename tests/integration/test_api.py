@@ -6,9 +6,9 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from riskpulse.api.app import create_app
-from riskpulse.config import get_settings
-from riskpulse.services.factory import get_pipeline, get_repository
+from impacttrail.api.app import create_app
+from impacttrail.config import get_settings
+from impacttrail.services.factory import get_pipeline, get_repository
 
 
 @pytest.fixture(autouse=True)

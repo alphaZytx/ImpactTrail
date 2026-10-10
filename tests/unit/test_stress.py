@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from uuid import uuid4
 
-from riskpulse.domain.signals import (
+from impacttrail.domain.signals import (
     EntityMatch,
     EventLabel,
     EventResult,
@@ -15,7 +15,7 @@ from riskpulse.domain.signals import (
     SentimentResult,
     SourceReference,
 )
-from riskpulse.stress_testing.service import StressTestingService
+from impacttrail.stress_testing.service import StressTestingService
 
 ROOT = Path(__file__).resolve().parents[2]
 

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from riskpulse.nlp.sentiment import FinBertSentimentAnalyzer
+from impacttrail.nlp.sentiment import FinBertSentimentAnalyzer
 
 
 def main() -> None:

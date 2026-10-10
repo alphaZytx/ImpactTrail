@@ -5,7 +5,7 @@ from collections.abc import AsyncIterator
 from dataclasses import dataclass
 from typing import Any
 
-from riskpulse.domain.documents import RawDocument
+from impacttrail.domain.documents import RawDocument
 
 
 @dataclass(frozen=True)

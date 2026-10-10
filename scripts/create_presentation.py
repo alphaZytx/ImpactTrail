@@ -14,11 +14,11 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen import canvas
 
-from riskpulse.config import Settings
-from riskpulse.ingestion.replay import ReplayAdapter
-from riskpulse.nlp.sentiment import LexiconSentimentAnalyzer
-from riskpulse.services.pipeline import RiskPipeline
-from riskpulse.storage.repositories import Repository
+from impacttrail.config import Settings
+from impacttrail.ingestion.replay import ReplayAdapter
+from impacttrail.nlp.sentiment import LexiconSentimentAnalyzer
+from impacttrail.services.pipeline import RiskPipeline
+from impacttrail.storage.repositories import Repository
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
@@ -142,7 +142,7 @@ def metric_card(
 
 def load_results() -> tuple[dict[str, Any], dict[str, Any] | None]:
     """Build deck evidence from an isolated deterministic replay, never mutable demo state."""
-    with tempfile.TemporaryDirectory(prefix="riskpulse-deck-") as directory:
+    with tempfile.TemporaryDirectory(prefix="impacttrail-deck-") as directory:
         settings = Settings(
             env="test",
             database_url=f"sqlite:///{Path(directory) / 'presentation.db'}",

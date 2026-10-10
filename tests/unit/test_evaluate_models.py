@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def load_evaluation_module() -> ModuleType:
     spec = importlib.util.spec_from_file_location(
-        "riskpulse_evaluate_models", ROOT / "scripts/evaluate_models.py"
+        "impacttrail_evaluate_models", ROOT / "scripts/evaluate_models.py"
     )
     if spec is None or spec.loader is None:
         raise RuntimeError("Unable to load scripts/evaluate_models.py")

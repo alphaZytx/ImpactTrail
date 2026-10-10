@@ -4,7 +4,7 @@ import math
 import re
 from typing import Protocol
 
-from riskpulse.domain.signals import SentimentLabel, SentimentResult
+from impacttrail.domain.signals import SentimentLabel, SentimentResult
 
 
 class SentimentAnalyzer(Protocol):

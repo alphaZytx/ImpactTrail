@@ -8,15 +8,15 @@ from fastapi import FastAPI, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from riskpulse import __version__
-from riskpulse.config import get_settings
-from riskpulse.domain.documents import RawDocument, SourceType
-from riskpulse.domain.signals import EventLabel, RiskSignal, SignalList
-from riskpulse.domain.stress import StressRun
-from riskpulse.ingestion.replay import ReplayAdapter
-from riskpulse.logging import configure_logging
-from riskpulse.services.factory import get_pipeline, get_repository
-from riskpulse.stress_testing.portfolio import load_portfolio
+from impacttrail import __version__
+from impacttrail.config import get_settings
+from impacttrail.domain.documents import RawDocument, SourceType
+from impacttrail.domain.signals import EventLabel, RiskSignal, SignalList
+from impacttrail.domain.stress import StressRun
+from impacttrail.ingestion.replay import ReplayAdapter
+from impacttrail.logging import configure_logging
+from impacttrail.services.factory import get_pipeline, get_repository
+from impacttrail.stress_testing.portfolio import load_portfolio
 
 
 class AnalyzeRequest(BaseModel):

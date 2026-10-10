@@ -11,7 +11,7 @@ REQUIRED = [
     "README.md",
     "LICENSE",
     "requirements.txt",
-    "src/riskpulse/api/app.py",
+    "src/impacttrail/api/app.py",
     "data/README.md",
     "data/demo/mixed_source_events.jsonl",
     "data/synthetic/wholesale_portfolio.csv",

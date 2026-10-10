@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     )
 
     env: Literal["development", "test", "production"] = "development"
-    database_url: str = f"sqlite:///{PROJECT_ROOT / 'data/runtime/riskpulse.db'}"
+    database_url: str = f"sqlite:///{PROJECT_ROOT / 'data/runtime/impacttrail.db'}"
     model_backend: Literal["auto", "lexicon", "finbert"] = "auto"
     event_backend: Literal["rules", "zero_shot"] = "rules"
     allow_model_downloads: bool = False

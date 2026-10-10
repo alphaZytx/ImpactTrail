@@ -3,11 +3,11 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from pathlib import Path
 
-from riskpulse.domain.documents import NormalizedDocument, SourceType
-from riskpulse.domain.signals import EntityMatch, EventLabel, SentimentLabel
-from riskpulse.nlp.event_classifier import RuleEventClassifier
-from riskpulse.nlp.impact import ImpactScorer
-from riskpulse.nlp.sentiment import LexiconSentimentAnalyzer, build_sentiment_analyzer
+from impacttrail.domain.documents import NormalizedDocument, SourceType
+from impacttrail.domain.signals import EntityMatch, EventLabel, SentimentLabel
+from impacttrail.nlp.event_classifier import RuleEventClassifier
+from impacttrail.nlp.impact import ImpactScorer
+from impacttrail.nlp.sentiment import LexiconSentimentAnalyzer, build_sentiment_analyzer
 
 ROOT = Path(__file__).resolve().parents[2]
 

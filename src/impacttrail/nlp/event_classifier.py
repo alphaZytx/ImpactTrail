@@ -4,8 +4,8 @@ import re
 from pathlib import Path
 from typing import Any
 
-from riskpulse.config import load_yaml
-from riskpulse.domain.signals import EventLabel, EventResult
+from impacttrail.config import load_yaml
+from impacttrail.domain.signals import EventLabel, EventResult
 
 _KEYWORD_VARIANTS = {
     "launch": ("launch", "launches", "launched", "launching"),

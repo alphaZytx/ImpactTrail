@@ -9,10 +9,10 @@ from typing import Any
 
 import pytest
 
-from riskpulse import cli
-from riskpulse.config import Settings
-from riskpulse.services.pipeline import RiskPipeline
-from riskpulse.storage.repositories import Repository
+from impacttrail import cli
+from impacttrail.config import Settings
+from impacttrail.services.pipeline import RiskPipeline
+from impacttrail.storage.repositories import Repository
 
 
 def test_doctor_reports_ready(

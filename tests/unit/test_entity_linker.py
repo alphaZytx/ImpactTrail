@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from riskpulse.processing.entity_linker import EntityLinker
+from impacttrail.processing.entity_linker import EntityLinker
 
 
 def test_ticker_match_has_high_confidence() -> None:

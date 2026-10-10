@@ -4,17 +4,17 @@ from pathlib import Path
 
 import pytest
 
-from riskpulse.config import Settings
-from riskpulse.nlp.sentiment import LexiconSentimentAnalyzer
-from riskpulse.services.pipeline import RiskPipeline
-from riskpulse.storage.repositories import Repository
+from impacttrail.config import Settings
+from impacttrail.nlp.sentiment import LexiconSentimentAnalyzer
+from impacttrail.services.pipeline import RiskPipeline
+from impacttrail.storage.repositories import Repository
 
 
 @pytest.fixture
 def settings(tmp_path: Path) -> Settings:
     return Settings(
         env="test",
-        database_url=f"sqlite:///{tmp_path / 'riskpulse-test.db'}",
+        database_url=f"sqlite:///{tmp_path / 'impacttrail-test.db'}",
         model_backend="lexicon",
     )
 

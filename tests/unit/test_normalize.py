@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
-from riskpulse.domain.documents import RawDocument, SourceType
-from riskpulse.processing.normalize import canonicalize_url, normalize_document, normalize_text
+from impacttrail.domain.documents import RawDocument, SourceType
+from impacttrail.processing.normalize import canonicalize_url, normalize_document, normalize_text
 
 
 def test_normalize_text_collapses_whitespace_and_control_characters() -> None:

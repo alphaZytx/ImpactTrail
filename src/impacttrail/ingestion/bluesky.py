@@ -6,9 +6,9 @@ from datetime import UTC, datetime
 import httpx
 from pydantic import HttpUrl
 
-from riskpulse.domain.documents import RawDocument, SourceType
-from riskpulse.ingestion.base import SourceAdapter
-from riskpulse.ingestion.http import get_json_with_retry
+from impacttrail.domain.documents import RawDocument, SourceType
+from impacttrail.ingestion.base import SourceAdapter
+from impacttrail.ingestion.http import get_json_with_retry
 
 
 class BlueskyAdapter(SourceAdapter):

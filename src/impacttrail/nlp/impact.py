@@ -3,9 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from riskpulse.config import load_yaml
-from riskpulse.domain.documents import NormalizedDocument
-from riskpulse.domain.signals import EntityMatch, EventResult, ImpactResult, SentimentResult
+from impacttrail.config import load_yaml
+from impacttrail.domain.documents import NormalizedDocument
+from impacttrail.domain.signals import EntityMatch, EventResult, ImpactResult, SentimentResult
 
 SOURCE_QUALITY = {"gdelt": 0.78, "bluesky": 0.55, "manual": 0.65}
 

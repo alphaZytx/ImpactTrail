@@ -44,7 +44,7 @@ a standardized adverse stress, not a prediction that its shocks will occur.
 
 | Capability | Implementation | Evidence |
 |---|---|---|
-| Two unstructured sources | GDELT and Bluesky HTTP adapters plus shape-equivalent replay | `src/riskpulse/ingestion/`, adapter integration tests |
+| Two unstructured sources | GDELT and Bluesky HTTP adapters plus shape-equivalent replay | `src/impacttrail/ingestion/`, adapter integration tests |
 | Entity resolution | Fictional issuer/ticker/alias registry, systemic and unresolved states | `processing/entity_linker.py`, entity and E2E tests |
 | Sentiment | Bounded finance lexicon by default; pinned optional FinBERT backend | `nlp/sentiment.py`, synthetic-set evaluation |
 | Event classification | Versioned ten-class taxonomy with honest `other` outcome | `nlp/event_classifier.py`, macro-F1 evaluation |

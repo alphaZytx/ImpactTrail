@@ -9,13 +9,13 @@ from collections.abc import Sequence
 from datetime import UTC, datetime
 from pathlib import Path
 
-from riskpulse.config import get_settings
-from riskpulse.domain.documents import NormalizedDocument, RawDocument, SourceType
-from riskpulse.domain.signals import EntityMatch
-from riskpulse.nlp.event_classifier import RuleEventClassifier
-from riskpulse.nlp.impact import ImpactScorer
-from riskpulse.nlp.sentiment import LexiconSentimentAnalyzer
-from riskpulse.processing.normalize import normalize_document
+from impacttrail.config import get_settings
+from impacttrail.domain.documents import NormalizedDocument, RawDocument, SourceType
+from impacttrail.domain.signals import EntityMatch
+from impacttrail.nlp.event_classifier import RuleEventClassifier
+from impacttrail.nlp.impact import ImpactScorer
+from impacttrail.nlp.sentiment import LexiconSentimentAnalyzer
+from impacttrail.processing.normalize import normalize_document
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "docs/results/model_metrics.json"

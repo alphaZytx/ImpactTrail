@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
 
-from riskpulse.domain.documents import RawDocument, SourceType
-from riskpulse.processing.normalize import normalize_document
-from riskpulse.storage.repositories import Repository
+from impacttrail.domain.documents import RawDocument, SourceType
+from impacttrail.processing.normalize import normalize_document
+from impacttrail.storage.repositories import Repository
 
 
 def test_document_deduplication_by_content(repository: Repository) -> None:

@@ -19,18 +19,18 @@ seed:
 	$(BIN)/python scripts/validate_data.py
 
 doctor:
-	$(BIN)/python -m riskpulse.cli doctor
+	$(BIN)/python -m impacttrail.cli doctor
 
 demo:
-	$(BIN)/python -m riskpulse.cli reset --yes
-	$(BIN)/python -m riskpulse.cli replay --fixture data/demo/mixed_source_events.jsonl
+	$(BIN)/python -m impacttrail.cli reset --yes
+	$(BIN)/python -m impacttrail.cli replay --fixture data/demo/mixed_source_events.jsonl
 	@echo "Data is ready. Run 'make api' and 'make dashboard' in separate terminals."
 
 live:
-	$(BIN)/python -m riskpulse.cli watch --query 'financial markets'
+	$(BIN)/python -m impacttrail.cli watch --query 'financial markets'
 
 api:
-	$(BIN)/uvicorn riskpulse.api.app:create_app --factory --host 127.0.0.1 --port 8000
+	$(BIN)/uvicorn impacttrail.api.app:create_app --factory --host 127.0.0.1 --port 8000
 
 dashboard:
 	$(BIN)/streamlit run dashboard/app.py --server.port 8501
@@ -39,12 +39,12 @@ test:
 	$(BIN)/pytest
 
 coverage:
-	$(BIN)/pytest --cov=riskpulse --cov-report=term-missing --cov-report=html
+	$(BIN)/pytest --cov=impacttrail --cov-report=term-missing --cov-report=html
 
 quality:
 	$(BIN)/ruff format --check .
 	$(BIN)/ruff check .
-	$(BIN)/mypy src/riskpulse
+	$(BIN)/mypy src/impacttrail
 	$(BIN)/python scripts/validate_data.py
 
 evaluate:
@@ -57,4 +57,4 @@ submission: release
 	$(BIN)/python scripts/release_check.py --submission
 
 clean:
-	$(BIN)/python -m riskpulse.cli reset --yes
+	$(BIN)/python -m impacttrail.cli reset --yes

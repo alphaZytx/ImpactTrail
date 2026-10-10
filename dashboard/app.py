@@ -522,7 +522,7 @@ with signal_tab:
         st.download_button(
             "Download selected signal JSON",
             data=json.dumps(selected, indent=2),
-            file_name=f"riskpulse-signal-{selected['signal_id']}.json",
+            file_name=f"impacttrail-signal-{selected['signal_id']}.json",
             mime="application/json",
         )
 

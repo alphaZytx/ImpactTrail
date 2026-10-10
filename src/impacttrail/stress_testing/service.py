@@ -5,11 +5,11 @@ from pathlib import Path
 from typing import Any
 from uuid import NAMESPACE_URL, uuid5
 
-from riskpulse.config import load_yaml
-from riskpulse.domain.portfolio import AssetType, PortfolioPosition
-from riskpulse.domain.signals import EventLabel, EventResult, RiskSignal
-from riskpulse.domain.stress import ShockSet, StressPositionResult, StressRun
-from riskpulse.stress_testing.portfolio import load_portfolio, portfolio_version
+from impacttrail.config import load_yaml
+from impacttrail.domain.portfolio import AssetType, PortfolioPosition
+from impacttrail.domain.signals import EventLabel, EventResult, RiskSignal
+from impacttrail.domain.stress import ShockSet, StressPositionResult, StressRun
+from impacttrail.stress_testing.portfolio import load_portfolio, portfolio_version
 
 
 class StressTestingService:

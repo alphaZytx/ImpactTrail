@@ -4,8 +4,8 @@ import asyncio
 
 import httpx
 
-from riskpulse.ingestion.bluesky import BlueskyAdapter
-from riskpulse.ingestion.gdelt import GdeltAdapter
+from impacttrail.ingestion.bluesky import BlueskyAdapter
+from impacttrail.ingestion.gdelt import GdeltAdapter
 
 
 async def collect(adapter: object, query: str) -> list[object]:

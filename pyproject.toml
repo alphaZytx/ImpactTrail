@@ -3,7 +3,7 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "riskpulse"
+name = "impacttrail"
 version = "1.0.0"
 description = "Auditable financial risk intelligence from news and social text"
 readme = "README.md"
@@ -32,7 +32,7 @@ dev = [
 ]
 
 [project.scripts]
-riskpulse = "riskpulse.cli:main"
+impacttrail = "impacttrail.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -43,7 +43,7 @@ addopts = "-q --strict-markers --disable-warnings"
 markers = ["integration: integration tests", "e2e: end-to-end tests"]
 
 [tool.coverage.run]
-source = ["riskpulse"]
+source = ["impacttrail"]
 branch = true
 
 [tool.coverage.report]
@@ -62,5 +62,5 @@ ignore = ["B008"]
 [tool.mypy]
 python_version = "3.11"
 strict = true
-packages = ["riskpulse"]
+packages = ["impacttrail"]
 ignore_missing_imports = true
