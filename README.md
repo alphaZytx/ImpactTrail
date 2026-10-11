@@ -1,9 +1,9 @@
 # ImpactTrail - S&P Global & Crisil Campus Hackathon 2026
 
 **Candidate Name:** Alok Chandra<br>
-**College Email ID:** `[Add NIT Patna email before submission]`<br>
+**College Email ID:** alokc.dd22.ec@nitp.ac.in<br>
 **College / Campus:** National Institute of Technology, Patna<br>
-**Demo Video Link:** `[Add unlisted YouTube link before submission]`<br>
+**Demo Video Link:** [Watch the unlisted YouTube walkthrough](https://youtu.be/tM-MIxhhwoc)<br>
 **Slide Deck:** [docs/presentation.pdf](docs/presentation.pdf)
 
 > Educational prototype. ImpactTrail is not investment advice and is not a regulatory stress-testing system.
@@ -245,8 +245,8 @@ curl 'http://127.0.0.1:8000/api/v1/signals?min_impact=7&actionable=true'
 - Stress formulas are transparent approximations, not regulatory capital models.
 - Public providers can throttle, reject, or delay requests; the live endpoint reports per-source
   failures without compromising the offline judging path.
-- The repository must be personalized with candidate identity and the final public video/repository
-  links before submission.
+- The public repository and unlisted demo-video links should be tested in a signed-out browser before
+  submission.
 
 ## 10. License and Acknowledgements
 

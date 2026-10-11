@@ -33,7 +33,7 @@ Finalists will pitch their solutions and demonstrate their innovation to the jur
 | 6 | Domain Impact | Why it matters from a use case or business standpoint |
 | 7 | Limitations & Next Steps | (Optional) Assumptions, gaps, future work |
 
-### 2.2 Demo Video (10 mins) suggested flow
+### 2.2 Demo Video (5 mins) suggested flow
 
 - **Intro (≈30s):** Problem and what the prototype does.
 - **Setup/Run (≈30s):** Show the app starting from the README commands.
