@@ -3,7 +3,7 @@
 **Candidate Name:** Alok Chandra<br>
 **College Email ID:** alokc.dd22.ec@nitp.ac.in<br>
 **College / Campus:** National Institute of Technology, Patna<br>
-**Demo Video Link:** [Watch the unlisted YouTube walkthrough](https://youtu.be/tM-MIxhhwoc)<br>
+**Demo Video Link:** [Watch the unlisted YouTube walkthrough](https://youtu.be/ESDbFxYK6Rg)<br>
 **Slide Deck:** [docs/presentation.pdf](docs/presentation.pdf)
 
 > Educational prototype. ImpactTrail is not investment advice and is not a regulatory stress-testing system.
